@@ -22,8 +22,14 @@ const CREATE_INPUT = {
   email: "exampleEmail",
   firstName: "exampleFirstName",
   id: "exampleId",
+  isActive: "true",
+  isAdmin: "true",
+  isViewer: "true",
+  language: "exampleLanguage",
+  lastActiveAt: new Date(),
   lastName: "exampleLastName",
   password: "examplePassword",
+  profileId: "exampleProfileId",
   updatedAt: new Date(),
   username: "exampleUsername",
 };
@@ -32,8 +38,14 @@ const CREATE_RESULT = {
   email: "exampleEmail",
   firstName: "exampleFirstName",
   id: "exampleId",
+  isActive: "true",
+  isAdmin: "true",
+  isViewer: "true",
+  language: "exampleLanguage",
+  lastActiveAt: new Date(),
   lastName: "exampleLastName",
   password: "examplePassword",
+  profileId: "exampleProfileId",
   updatedAt: new Date(),
   username: "exampleUsername",
 };
@@ -43,8 +55,14 @@ const FIND_MANY_RESULT = [
     email: "exampleEmail",
     firstName: "exampleFirstName",
     id: "exampleId",
+    isActive: "true",
+    isAdmin: "true",
+    isViewer: "true",
+    language: "exampleLanguage",
+    lastActiveAt: new Date(),
     lastName: "exampleLastName",
     password: "examplePassword",
+    profileId: "exampleProfileId",
     updatedAt: new Date(),
     username: "exampleUsername",
   },
@@ -54,8 +72,14 @@ const FIND_ONE_RESULT = {
   email: "exampleEmail",
   firstName: "exampleFirstName",
   id: "exampleId",
+  isActive: "true",
+  isAdmin: "true",
+  isViewer: "true",
+  language: "exampleLanguage",
+  lastActiveAt: new Date(),
   lastName: "exampleLastName",
   password: "examplePassword",
+  profileId: "exampleProfileId",
   updatedAt: new Date(),
   username: "exampleUsername",
 };
@@ -143,6 +167,7 @@ describe("User", () => {
       .expect({
         ...CREATE_RESULT,
         createdAt: CREATE_RESULT.createdAt.toISOString(),
+        lastActiveAt: CREATE_RESULT.lastActiveAt.toISOString(),
         updatedAt: CREATE_RESULT.updatedAt.toISOString(),
       });
   });
@@ -155,6 +180,7 @@ describe("User", () => {
         {
           ...FIND_MANY_RESULT[0],
           createdAt: FIND_MANY_RESULT[0].createdAt.toISOString(),
+          lastActiveAt: FIND_MANY_RESULT[0].lastActiveAt.toISOString(),
           updatedAt: FIND_MANY_RESULT[0].updatedAt.toISOString(),
         },
       ]);
@@ -178,6 +204,7 @@ describe("User", () => {
       .expect({
         ...FIND_ONE_RESULT,
         createdAt: FIND_ONE_RESULT.createdAt.toISOString(),
+        lastActiveAt: FIND_ONE_RESULT.lastActiveAt.toISOString(),
         updatedAt: FIND_ONE_RESULT.updatedAt.toISOString(),
       });
   });
@@ -191,6 +218,7 @@ describe("User", () => {
       .expect({
         ...CREATE_RESULT,
         createdAt: CREATE_RESULT.createdAt.toISOString(),
+        lastActiveAt: CREATE_RESULT.lastActiveAt.toISOString(),
         updatedAt: CREATE_RESULT.updatedAt.toISOString(),
       })
       .then(function () {

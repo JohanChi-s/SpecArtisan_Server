@@ -31,11 +31,19 @@ variables:
     SSL_CERT_PATH: "./.certs/server.crt"
     SSL_KEY_PATH: "./.certs/server.key"
     CA_CERT_PATH: "./.certs/ca.crt"
+    OTEL_COLLECTOR_HOST: "localhost"
+    OTEL_COLLECTOR_PORT_GRPC: "4317"
+    OTEL_COLLECTOR_PORT_HTTP: "4318"
+    OTEL_EXPORTER_OTLP_ENDPOINT: "http://${OTEL_COLLECTOR_HOST}:${OTEL_COLLECTOR_PORT_HTTP}"
+    JAEGER_AGENT_HOST: "jaeger"
+    JAEGER_AGENT_PORT: "16686"
     REDIS_HOST: "localhost"
     REDIS_PORT: "6379"
     REDIS_TTL: "5000"
     REDIS_USERNAME: ""
     REDIS_PASSWORD: ""
+    LOG_LEVEL: "info"
+    SERVICE_NAME: "User Services"
   secret: {}
 
 imagePullSecrets: []

@@ -26,6 +26,8 @@ async function seed(bcryptSalt: Salt) {
 
   const data = {
     email: "example@example.com",
+    isAdmin: false,
+    profileId: "",
     roles: ["user"],
     username: "admin",
   };
@@ -41,6 +43,8 @@ async function seed(bcryptSalt: Salt) {
 
   const data = {
     email: "example@example.com",
+    isAdmin: false,
+    profileId: "",
     roles: ["user"],
     username: "admin",
   };
