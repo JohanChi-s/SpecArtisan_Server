@@ -21,6 +21,7 @@ import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { UserService } from "../user.service";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { UserCreateInput } from "./UserCreateInput";
 import { User } from "./User";
 import { UserFindManyArgs } from "./UserFindManyArgs";
@@ -56,7 +57,13 @@ export class UserControllerBase {
         email: true,
         firstName: true,
         id: true,
+        isActive: true,
+        isAdmin: true,
+        isViewer: true,
+        language: true,
+        lastActiveAt: true,
         lastName: true,
+        profileId: true,
         roles: true,
         updatedAt: true,
         username: true,
@@ -85,7 +92,13 @@ export class UserControllerBase {
         email: true,
         firstName: true,
         id: true,
+        isActive: true,
+        isAdmin: true,
+        isViewer: true,
+        language: true,
+        lastActiveAt: true,
         lastName: true,
+        profileId: true,
         roles: true,
         updatedAt: true,
         username: true,
@@ -93,15 +106,10 @@ export class UserControllerBase {
     });
   }
 
-  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @Public()
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: User })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "read",
-    possession: "own",
-  })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
@@ -115,7 +123,13 @@ export class UserControllerBase {
         email: true,
         firstName: true,
         id: true,
+        isActive: true,
+        isAdmin: true,
+        isViewer: true,
+        language: true,
+        lastActiveAt: true,
         lastName: true,
+        profileId: true,
         roles: true,
         updatedAt: true,
         username: true,
@@ -157,7 +171,13 @@ export class UserControllerBase {
           email: true,
           firstName: true,
           id: true,
+          isActive: true,
+          isAdmin: true,
+          isViewer: true,
+          language: true,
+          lastActiveAt: true,
           lastName: true,
+          profileId: true,
           roles: true,
           updatedAt: true,
           username: true,
@@ -195,7 +215,13 @@ export class UserControllerBase {
           email: true,
           firstName: true,
           id: true,
+          isActive: true,
+          isAdmin: true,
+          isViewer: true,
+          language: true,
+          lastActiveAt: true,
           lastName: true,
+          profileId: true,
           roles: true,
           updatedAt: true,
           username: true,

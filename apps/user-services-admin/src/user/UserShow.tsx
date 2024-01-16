@@ -5,6 +5,7 @@ import {
   ShowProps,
   DateField,
   TextField,
+  BooleanField,
 } from "react-admin";
 
 export const UserShow = (props: ShowProps): React.ReactElement => {
@@ -15,7 +16,13 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
         <TextField label="Email" source="email" />
         <TextField label="First Name" source="firstName" />
         <TextField label="ID" source="id" />
+        <BooleanField label="isActive" source="isActive" />
+        <BooleanField label="isAdmin" source="isAdmin" />
+        <BooleanField label="isViewer" source="isViewer" />
+        <TextField label="Language" source="language" />
+        <DateField source="lastActiveAt" label="Last Active At" />
         <TextField label="Last Name" source="lastName" />
+        <TextField label="Profile Id" source="profileId" />
         <TextField label="Roles" source="roles" />
         <DateField source="updatedAt" label="Updated At" />
         <TextField label="Username" source="username" />
