@@ -26,6 +26,10 @@ import { TeamFindUniqueArgs } from "./TeamFindUniqueArgs";
 import { CreateTeamArgs } from "./CreateTeamArgs";
 import { UpdateTeamArgs } from "./UpdateTeamArgs";
 import { DeleteTeamArgs } from "./DeleteTeamArgs";
+import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
+import { User } from "../../user/base/User";
+import { WorkspaceFindManyArgs } from "../../workspace/base/WorkspaceFindManyArgs";
+import { Workspace } from "../../workspace/base/Workspace";
 import { TeamService } from "../team.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Team)
@@ -130,5 +134,45 @@ export class TeamResolverBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [User], { name: "users" })
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "any",
+  })
+  async findUsers(
+    @graphql.Parent() parent: Team,
+    @graphql.Args() args: UserFindManyArgs
+  ): Promise<User[]> {
+    const results = await this.service.findUsers(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [Workspace], { name: "workspaces" })
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "read",
+    possession: "any",
+  })
+  async findWorkspaces(
+    @graphql.Parent() parent: Team,
+    @graphql.Args() args: WorkspaceFindManyArgs
+  ): Promise<Workspace[]> {
+    const results = await this.service.findWorkspaces(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
   }
 }

@@ -13,9 +13,11 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { Type } from "class-transformer";
-import { IsOptional } from "class-validator";
+import { IsOptional, ValidateNested } from "class-validator";
 import { StringFilter } from "../../util/StringFilter";
-import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
+import { BooleanFilter } from "../../util/BooleanFilter";
+import { TeamListRelationFilter } from "../../team/base/TeamListRelationFilter";
+import { UserListRelationFilter } from "../../user/base/UserListRelationFilter";
 
 @InputType()
 class WorkspaceWhereInput {
@@ -43,14 +45,14 @@ class WorkspaceWhereInput {
 
   @ApiProperty({
     required: false,
-    type: BooleanNullableFilter,
+    type: BooleanFilter,
   })
-  @Type(() => BooleanNullableFilter)
+  @Type(() => BooleanFilter)
   @IsOptional()
-  @Field(() => BooleanNullableFilter, {
+  @Field(() => BooleanFilter, {
     nullable: true,
   })
-  isPublic?: BooleanNullableFilter;
+  isPublic?: BooleanFilter;
 
   @ApiProperty({
     required: false,
@@ -65,6 +67,18 @@ class WorkspaceWhereInput {
 
   @ApiProperty({
     required: false,
+    type: () => TeamListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => TeamListRelationFilter)
+  @IsOptional()
+  @Field(() => TeamListRelationFilter, {
+    nullable: true,
+  })
+  teams?: TeamListRelationFilter;
+
+  @ApiProperty({
+    required: false,
     type: StringNullableFilter,
   })
   @Type(() => StringNullableFilter)
@@ -73,6 +87,18 @@ class WorkspaceWhereInput {
     nullable: true,
   })
   url?: StringNullableFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => UserListRelationFilter)
+  @IsOptional()
+  @Field(() => UserListRelationFilter, {
+    nullable: true,
+  })
+  user?: UserListRelationFilter;
 }
 
 export { WorkspaceWhereInput as WorkspaceWhereInput };

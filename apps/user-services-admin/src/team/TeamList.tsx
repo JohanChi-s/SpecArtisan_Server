@@ -31,7 +31,6 @@ export const TeamList = (props: ListProps): React.ReactElement => {
         <TextField label="Theme" source="theme" />
         <DateField source="updatedAt" label="Updated At" />
         <TextField label="Url" source="url" />
-        <TextField label="Workspace Id" source="workspaceId" />
       </Datagrid>
     </List>
   );

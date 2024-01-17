@@ -1,11 +1,17 @@
 import * as React from "react";
+
 import {
   Create,
   SimpleForm,
   CreateProps,
   TextInput,
   BooleanInput,
+  ReferenceArrayInput,
+  SelectArrayInput,
 } from "react-admin";
+
+import { UserTitle } from "../user/UserTitle";
+import { WorkspaceTitle } from "../workspace/WorkspaceTitle";
 
 export const TeamCreate = (props: CreateProps): React.ReactElement => {
   return (
@@ -20,7 +26,22 @@ export const TeamCreate = (props: CreateProps): React.ReactElement => {
         <TextInput label="Sub Domain" source="subDomain" />
         <TextInput label="Theme" source="theme" />
         <TextInput label="Url" source="url" />
-        <TextInput label="Workspace Id" source="workspaceId" />
+        <ReferenceArrayInput
+          source="users"
+          reference="User"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={UserTitle} />
+        </ReferenceArrayInput>
+        <ReferenceArrayInput
+          source="workspaces"
+          reference="Workspace"
+          parse={(value: any) => value && value.map((v: any) => ({ id: v }))}
+          format={(value: any) => value && value.map((v: any) => v.id)}
+        >
+          <SelectArrayInput optionText={WorkspaceTitle} />
+        </ReferenceArrayInput>
       </SimpleForm>
     </Create>
   );

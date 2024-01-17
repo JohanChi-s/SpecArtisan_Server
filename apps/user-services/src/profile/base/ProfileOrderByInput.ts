@@ -105,7 +105,7 @@ class ProfileOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  userId?: SortOrder;
+  id?: SortOrder;
 }
 
 export { ProfileOrderByInput as ProfileOrderByInput };

@@ -1,4 +1,5 @@
 import * as React from "react";
+
 import {
   Show,
   SimpleShowLayout,
@@ -6,7 +7,10 @@ import {
   DateField,
   TextField,
   BooleanField,
+  ReferenceField,
 } from "react-admin";
+
+import { PROFILE_TITLE_FIELD } from "../profile/ProfileTitle";
 
 export const UserShow = (props: ShowProps): React.ReactElement => {
   return (
@@ -22,6 +26,9 @@ export const UserShow = (props: ShowProps): React.ReactElement => {
         <TextField label="Language" source="language" />
         <DateField source="lastActiveAt" label="Last Active At" />
         <TextField label="Last Name" source="lastName" />
+        <ReferenceField label="Profile" source="profile.id" reference="Profile">
+          <TextField source={PROFILE_TITLE_FIELD} />
+        </ReferenceField>
         <TextField label="Profile Id" source="profileId" />
         <TextField label="Roles" source="roles" />
         <DateField source="updatedAt" label="Updated At" />

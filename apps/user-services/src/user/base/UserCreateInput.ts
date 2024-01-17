@@ -11,10 +11,19 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, IsBoolean } from "class-validator";
+import {
+  IsString,
+  IsOptional,
+  IsBoolean,
+  ValidateNested,
+} from "class-validator";
+import { ProfileWhereUniqueInput } from "../../profile/base/ProfileWhereUniqueInput";
+import { Type } from "class-transformer";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
+import { TeamCreateNestedManyWithoutUsersInput } from "./TeamCreateNestedManyWithoutUsersInput";
+import { WorkspaceCreateNestedManyWithoutUsersInput } from "./WorkspaceCreateNestedManyWithoutUsersInput";
 
 @InputType()
 class UserCreateInput {
@@ -98,6 +107,18 @@ class UserCreateInput {
   password!: string;
 
   @ApiProperty({
+    required: false,
+    type: () => ProfileWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => ProfileWhereUniqueInput)
+  @IsOptional()
+  @Field(() => ProfileWhereUniqueInput, {
+    nullable: true,
+  })
+  profile?: ProfileWhereUniqueInput | null;
+
+  @ApiProperty({
     required: true,
     type: String,
   })
@@ -113,12 +134,36 @@ class UserCreateInput {
   roles!: InputJsonValue;
 
   @ApiProperty({
+    required: false,
+    type: () => TeamCreateNestedManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => TeamCreateNestedManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => TeamCreateNestedManyWithoutUsersInput, {
+    nullable: true,
+  })
+  teams?: TeamCreateNestedManyWithoutUsersInput;
+
+  @ApiProperty({
     required: true,
     type: String,
   })
   @IsString()
   @Field(() => String)
   username!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => WorkspaceCreateNestedManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => WorkspaceCreateNestedManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => WorkspaceCreateNestedManyWithoutUsersInput, {
+    nullable: true,
+  })
+  workspaces?: WorkspaceCreateNestedManyWithoutUsersInput;
 }
 
 export { UserCreateInput as UserCreateInput };

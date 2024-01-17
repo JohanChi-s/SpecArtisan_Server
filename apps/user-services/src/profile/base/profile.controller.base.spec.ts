@@ -25,7 +25,6 @@ const CREATE_INPUT = {
   fullName: "exampleFullName",
   id: "exampleId",
   updatedAt: new Date(),
-  userId: "exampleUserId",
 };
 const CREATE_RESULT = {
   address: "exampleAddress",
@@ -35,7 +34,6 @@ const CREATE_RESULT = {
   fullName: "exampleFullName",
   id: "exampleId",
   updatedAt: new Date(),
-  userId: "exampleUserId",
 };
 const FIND_MANY_RESULT = [
   {
@@ -46,7 +44,6 @@ const FIND_MANY_RESULT = [
     fullName: "exampleFullName",
     id: "exampleId",
     updatedAt: new Date(),
-    userId: "exampleUserId",
   },
 ];
 const FIND_ONE_RESULT = {
@@ -57,7 +54,6 @@ const FIND_ONE_RESULT = {
   fullName: "exampleFullName",
   id: "exampleId",
   updatedAt: new Date(),
-  userId: "exampleUserId",
 };
 
 const service = {

@@ -37,6 +37,9 @@ export class ProfileControllerBase {
   @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Profile })
+  @swagger.ApiBody({
+    type: ProfileCreateInput,
+  })
   @nestAccessControl.UseRoles({
     resource: "Profile",
     action: "create",
@@ -45,14 +48,17 @@ export class ProfileControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  @swagger.ApiBody({
-    type: ProfileCreateInput,
-  })
   async createProfile(
     @common.Body() data: ProfileCreateInput
   ): Promise<Profile> {
     return await this.service.createProfile({
-      data: data,
+      data: {
+        ...data,
+
+        user: {
+          connect: data.user,
+        },
+      },
       select: {
         address: true,
         age: true,
@@ -61,7 +67,12 @@ export class ProfileControllerBase {
         fullName: true,
         id: true,
         updatedAt: true,
-        userId: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
   }
@@ -90,7 +101,12 @@ export class ProfileControllerBase {
         fullName: true,
         id: true,
         updatedAt: true,
-        userId: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
   }
@@ -120,7 +136,12 @@ export class ProfileControllerBase {
         fullName: true,
         id: true,
         updatedAt: true,
-        userId: true,
+
+        user: {
+          select: {
+            id: true,
+          },
+        },
       },
     });
     if (result === null) {
@@ -135,6 +156,9 @@ export class ProfileControllerBase {
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Profile })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @swagger.ApiBody({
+    type: ProfileUpdateInput,
+  })
   @nestAccessControl.UseRoles({
     resource: "Profile",
     action: "update",
@@ -143,9 +167,6 @@ export class ProfileControllerBase {
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
   })
-  @swagger.ApiBody({
-    type: ProfileUpdateInput,
-  })
   async updateProfile(
     @common.Param() params: ProfileWhereUniqueInput,
     @common.Body() data: ProfileUpdateInput
@@ -153,7 +174,13 @@ export class ProfileControllerBase {
     try {
       return await this.service.updateProfile({
         where: params,
-        data: data,
+        data: {
+          ...data,
+
+          user: {
+            connect: data.user,
+          },
+        },
         select: {
           address: true,
           age: true,
@@ -162,7 +189,12 @@ export class ProfileControllerBase {
           fullName: true,
           id: true,
           updatedAt: true,
-          userId: true,
+
+          user: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {
@@ -200,7 +232,12 @@ export class ProfileControllerBase {
           fullName: true,
           id: true,
           updatedAt: true,
-          userId: true,
+
+          user: {
+            select: {
+              id: true,
+            },
+          },
         },
       });
     } catch (error) {

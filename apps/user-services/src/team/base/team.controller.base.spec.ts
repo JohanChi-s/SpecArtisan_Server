@@ -30,7 +30,6 @@ const CREATE_INPUT = {
   theme: "exampleTheme",
   updatedAt: new Date(),
   url: "exampleUrl",
-  workspaceId: "exampleWorkspaceId",
 };
 const CREATE_RESULT = {
   avatarUrl: "exampleAvatarUrl",
@@ -45,7 +44,6 @@ const CREATE_RESULT = {
   theme: "exampleTheme",
   updatedAt: new Date(),
   url: "exampleUrl",
-  workspaceId: "exampleWorkspaceId",
 };
 const FIND_MANY_RESULT = [
   {
@@ -61,7 +59,6 @@ const FIND_MANY_RESULT = [
     theme: "exampleTheme",
     updatedAt: new Date(),
     url: "exampleUrl",
-    workspaceId: "exampleWorkspaceId",
   },
 ];
 const FIND_ONE_RESULT = {
@@ -77,7 +74,6 @@ const FIND_ONE_RESULT = {
   theme: "exampleTheme",
   updatedAt: new Date(),
   url: "exampleUrl",
-  workspaceId: "exampleWorkspaceId",
 };
 
 const service = {

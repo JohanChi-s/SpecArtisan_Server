@@ -9,7 +9,6 @@ services:
       - ${PORT}:3000
     environment:
       BCRYPT_SALT: ${BCRYPT_SALT}
-      DB_URL: postgres://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
       JAEGER_AGENT_HOST: ${JAEGER_AGENT_HOST}
       JAEGER_AGENT_PORT: ${JAEGER_AGENT_PORT}
       OTEL_COLLECTOR_HOST: ${OTEL_COLLECTOR_HOST}
@@ -20,6 +19,7 @@ services:
       JWT_EXPIRATION: ${JWT_EXPIRATION}
       LOG_LEVEL: ${LOG_LEVEL}
       SERVICE_NAME: ${SERVICE_NAME}
+      DB_URL: postgres://${DB_USER}:${DB_PASSWORD}@db:5432/${DB_NAME}
     depends_on:
       - redis
     restart: on-failure
@@ -36,23 +36,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
-  db:
-    image: postgres:12
-    ports:
-      - ${DB_PORT}:5432
-    environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_NAME}
-    volumes:
-      - postgres:/var/lib/postgresql/data
-    healthcheck:
-      test:
-        - CMD-SHELL
-        - pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}
-      timeout: 45s
-      interval: 10s
-      retries: 10
   keycloak:
     image: quay.io/keycloak/keycloak
     command: -v start-dev --import-realm
@@ -87,6 +70,23 @@ services:
       - --config=/etc/otel-config.yml
     depends_on:
       - jaeger
+  db:
+    image: postgres:12
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}
+      timeout: 45s
+      interval: 10s
+      retries: 10
   redis:
     container_name: ${REDIS_HOST}
     image: redis:7

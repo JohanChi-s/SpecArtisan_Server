@@ -26,6 +26,12 @@ import { Team } from "./Team";
 import { TeamFindManyArgs } from "./TeamFindManyArgs";
 import { TeamWhereUniqueInput } from "./TeamWhereUniqueInput";
 import { TeamUpdateInput } from "./TeamUpdateInput";
+import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
+import { User } from "../../user/base/User";
+import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
+import { WorkspaceFindManyArgs } from "../../workspace/base/WorkspaceFindManyArgs";
+import { Workspace } from "../../workspace/base/Workspace";
+import { WorkspaceWhereUniqueInput } from "../../workspace/base/WorkspaceWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -37,6 +43,9 @@ export class TeamControllerBase {
   @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Team })
+  @swagger.ApiBody({
+    type: TeamCreateInput,
+  })
   @nestAccessControl.UseRoles({
     resource: "Team",
     action: "create",
@@ -44,9 +53,6 @@ export class TeamControllerBase {
   })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
-  })
-  @swagger.ApiBody({
-    type: TeamCreateInput,
   })
   async createTeam(@common.Body() data: TeamCreateInput): Promise<Team> {
     return await this.service.createTeam({
@@ -64,7 +70,6 @@ export class TeamControllerBase {
         theme: true,
         updatedAt: true,
         url: true,
-        workspaceId: true,
       },
     });
   }
@@ -98,7 +103,6 @@ export class TeamControllerBase {
         theme: true,
         updatedAt: true,
         url: true,
-        workspaceId: true,
       },
     });
   }
@@ -133,7 +137,6 @@ export class TeamControllerBase {
         theme: true,
         updatedAt: true,
         url: true,
-        workspaceId: true,
       },
     });
     if (result === null) {
@@ -148,6 +151,9 @@ export class TeamControllerBase {
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Team })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @swagger.ApiBody({
+    type: TeamUpdateInput,
+  })
   @nestAccessControl.UseRoles({
     resource: "Team",
     action: "update",
@@ -155,9 +161,6 @@ export class TeamControllerBase {
   })
   @swagger.ApiForbiddenResponse({
     type: errors.ForbiddenException,
-  })
-  @swagger.ApiBody({
-    type: TeamUpdateInput,
   })
   async updateTeam(
     @common.Param() params: TeamWhereUniqueInput,
@@ -180,7 +183,6 @@ export class TeamControllerBase {
           theme: true,
           updatedAt: true,
           url: true,
-          workspaceId: true,
         },
       });
     } catch (error) {
@@ -223,7 +225,6 @@ export class TeamControllerBase {
           theme: true,
           updatedAt: true,
           url: true,
-          workspaceId: true,
         },
       });
     } catch (error) {
@@ -234,5 +235,217 @@ export class TeamControllerBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/users")
+  @ApiNestedQuery(UserFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "any",
+  })
+  async findUsers(
+    @common.Req() request: Request,
+    @common.Param() params: TeamWhereUniqueInput
+  ): Promise<User[]> {
+    const query = plainToClass(UserFindManyArgs, request.query);
+    const results = await this.service.findUsers(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        email: true,
+        firstName: true,
+        id: true,
+        isActive: true,
+        isAdmin: true,
+        isViewer: true,
+        language: true,
+        lastActiveAt: true,
+        lastName: true,
+
+        profile: {
+          select: {
+            id: true,
+          },
+        },
+
+        profileId: true,
+        roles: true,
+        updatedAt: true,
+        username: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/users")
+  @nestAccessControl.UseRoles({
+    resource: "Team",
+    action: "update",
+    possession: "any",
+  })
+  async connectUsers(
+    @common.Param() params: TeamWhereUniqueInput,
+    @common.Body() body: UserWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      users: {
+        connect: body,
+      },
+    };
+    await this.service.updateTeam({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/users")
+  @nestAccessControl.UseRoles({
+    resource: "Team",
+    action: "update",
+    possession: "any",
+  })
+  async updateUsers(
+    @common.Param() params: TeamWhereUniqueInput,
+    @common.Body() body: UserWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      users: {
+        set: body,
+      },
+    };
+    await this.service.updateTeam({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/users")
+  @nestAccessControl.UseRoles({
+    resource: "Team",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectUsers(
+    @common.Param() params: TeamWhereUniqueInput,
+    @common.Body() body: UserWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      users: {
+        disconnect: body,
+      },
+    };
+    await this.service.updateTeam({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @common.Get("/:id/workspaces")
+  @ApiNestedQuery(WorkspaceFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "read",
+    possession: "any",
+  })
+  async findWorkspaces(
+    @common.Req() request: Request,
+    @common.Param() params: TeamWhereUniqueInput
+  ): Promise<Workspace[]> {
+    const query = plainToClass(WorkspaceFindManyArgs, request.query);
+    const results = await this.service.findWorkspaces(params.id, {
+      ...query,
+      select: {
+        createdAt: true,
+        domain: true,
+        id: true,
+        isPublic: true,
+        name: true,
+        updatedAt: true,
+        url: true,
+      },
+    });
+    if (results === null) {
+      throw new errors.NotFoundException(
+        `No resource was found for ${JSON.stringify(params)}`
+      );
+    }
+    return results;
+  }
+
+  @common.Post("/:id/workspaces")
+  @nestAccessControl.UseRoles({
+    resource: "Team",
+    action: "update",
+    possession: "any",
+  })
+  async connectWorkspaces(
+    @common.Param() params: TeamWhereUniqueInput,
+    @common.Body() body: WorkspaceWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      workspaces: {
+        connect: body,
+      },
+    };
+    await this.service.updateTeam({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Patch("/:id/workspaces")
+  @nestAccessControl.UseRoles({
+    resource: "Team",
+    action: "update",
+    possession: "any",
+  })
+  async updateWorkspaces(
+    @common.Param() params: TeamWhereUniqueInput,
+    @common.Body() body: WorkspaceWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      workspaces: {
+        set: body,
+      },
+    };
+    await this.service.updateTeam({
+      where: params,
+      data,
+      select: { id: true },
+    });
+  }
+
+  @common.Delete("/:id/workspaces")
+  @nestAccessControl.UseRoles({
+    resource: "Team",
+    action: "update",
+    possession: "any",
+  })
+  async disconnectWorkspaces(
+    @common.Param() params: TeamWhereUniqueInput,
+    @common.Body() body: WorkspaceWhereUniqueInput[]
+  ): Promise<void> {
+    const data = {
+      workspaces: {
+        disconnect: body,
+      },
+    };
+    await this.service.updateTeam({
+      where: params,
+      data,
+      select: { id: true },
+    });
   }
 }

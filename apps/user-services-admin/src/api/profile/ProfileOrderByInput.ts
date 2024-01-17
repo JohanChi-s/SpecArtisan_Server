@@ -8,5 +8,5 @@ export type ProfileOrderByInput = {
   fullName?: SortOrder;
   id?: SortOrder;
   updatedAt?: SortOrder;
-  userId?: SortOrder;
+  id?: SortOrder;
 };

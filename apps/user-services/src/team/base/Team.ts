@@ -11,8 +11,16 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, IsBoolean, IsDate } from "class-validator";
+import {
+  IsString,
+  IsOptional,
+  IsBoolean,
+  IsDate,
+  ValidateNested,
+} from "class-validator";
 import { Type } from "class-transformer";
+import { User } from "../../user/base/User";
+import { Workspace } from "../../workspace/base/Workspace";
 
 @ObjectType()
 class Team {
@@ -141,14 +149,21 @@ class Team {
 
   @ApiProperty({
     required: false,
-    type: String,
+    type: () => [User],
   })
-  @IsString()
+  @ValidateNested()
+  @Type(() => User)
   @IsOptional()
-  @Field(() => String, {
-    nullable: true,
+  users?: Array<User>;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Workspace],
   })
-  workspaceId!: string | null;
+  @ValidateNested()
+  @Type(() => Workspace)
+  @IsOptional()
+  workspaces?: Array<Workspace>;
 }
 
 export { Team as Team };
