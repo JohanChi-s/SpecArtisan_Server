@@ -5,22 +5,34 @@ import { theme } from "./theme/theme";
 import Login from "./Login";
 import "./App.scss";
 import Dashboard from "./pages/Dashboard";
-import { OrderList } from "./order/OrderList";
-import { OrderCreate } from "./order/OrderCreate";
-import { OrderEdit } from "./order/OrderEdit";
-import { OrderShow } from "./order/OrderShow";
-import { CustomerList } from "./customer/CustomerList";
-import { CustomerCreate } from "./customer/CustomerCreate";
-import { CustomerEdit } from "./customer/CustomerEdit";
-import { CustomerShow } from "./customer/CustomerShow";
-import { AddressList } from "./address/AddressList";
-import { AddressCreate } from "./address/AddressCreate";
-import { AddressEdit } from "./address/AddressEdit";
-import { AddressShow } from "./address/AddressShow";
-import { ProductList } from "./product/ProductList";
-import { ProductCreate } from "./product/ProductCreate";
-import { ProductEdit } from "./product/ProductEdit";
-import { ProductShow } from "./product/ProductShow";
+import { DocumentList } from "./document/DocumentList";
+import { DocumentCreate } from "./document/DocumentCreate";
+import { DocumentEdit } from "./document/DocumentEdit";
+import { DocumentShow } from "./document/DocumentShow";
+import { CollectionList } from "./collection/CollectionList";
+import { CollectionCreate } from "./collection/CollectionCreate";
+import { CollectionEdit } from "./collection/CollectionEdit";
+import { CollectionShow } from "./collection/CollectionShow";
+import { MemberList } from "./member/MemberList";
+import { MemberCreate } from "./member/MemberCreate";
+import { MemberEdit } from "./member/MemberEdit";
+import { MemberShow } from "./member/MemberShow";
+import { ArchivedList } from "./archived/ArchivedList";
+import { ArchivedCreate } from "./archived/ArchivedCreate";
+import { ArchivedEdit } from "./archived/ArchivedEdit";
+import { ArchivedShow } from "./archived/ArchivedShow";
+import { CommentList } from "./comment/CommentList";
+import { CommentCreate } from "./comment/CommentCreate";
+import { CommentEdit } from "./comment/CommentEdit";
+import { CommentShow } from "./comment/CommentShow";
+import { ActionEventList } from "./actionEvent/ActionEventList";
+import { ActionEventCreate } from "./actionEvent/ActionEventCreate";
+import { ActionEventEdit } from "./actionEvent/ActionEventEdit";
+import { ActionEventShow } from "./actionEvent/ActionEventShow";
+import { PositionList } from "./position/PositionList";
+import { PositionCreate } from "./position/PositionCreate";
+import { PositionEdit } from "./position/PositionEdit";
+import { PositionShow } from "./position/PositionShow";
 import { jwtAuthProvider } from "./auth-provider/ra-auth-jwt";
 
 const App = (): React.ReactElement => {
@@ -48,32 +60,53 @@ const App = (): React.ReactElement => {
         loginPage={Login}
       >
         <Resource
-          name="Order"
-          list={OrderList}
-          edit={OrderEdit}
-          create={OrderCreate}
-          show={OrderShow}
+          name="Document"
+          list={DocumentList}
+          edit={DocumentEdit}
+          create={DocumentCreate}
+          show={DocumentShow}
         />
         <Resource
-          name="Customer"
-          list={CustomerList}
-          edit={CustomerEdit}
-          create={CustomerCreate}
-          show={CustomerShow}
+          name="Collection"
+          list={CollectionList}
+          edit={CollectionEdit}
+          create={CollectionCreate}
+          show={CollectionShow}
         />
         <Resource
-          name="Address"
-          list={AddressList}
-          edit={AddressEdit}
-          create={AddressCreate}
-          show={AddressShow}
+          name="Member"
+          list={MemberList}
+          edit={MemberEdit}
+          create={MemberCreate}
+          show={MemberShow}
         />
         <Resource
-          name="Product"
-          list={ProductList}
-          edit={ProductEdit}
-          create={ProductCreate}
-          show={ProductShow}
+          name="Archived"
+          list={ArchivedList}
+          edit={ArchivedEdit}
+          create={ArchivedCreate}
+          show={ArchivedShow}
+        />
+        <Resource
+          name="Comment"
+          list={CommentList}
+          edit={CommentEdit}
+          create={CommentCreate}
+          show={CommentShow}
+        />
+        <Resource
+          name="ActionEvent"
+          list={ActionEventList}
+          edit={ActionEventEdit}
+          create={ActionEventCreate}
+          show={ActionEventShow}
+        />
+        <Resource
+          name="Position"
+          list={PositionList}
+          edit={PositionEdit}
+          create={PositionCreate}
+          show={PositionShow}
         />
       </Admin>
     </div>

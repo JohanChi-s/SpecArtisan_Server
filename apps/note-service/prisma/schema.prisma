@@ -7,50 +7,126 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model Order {
-  createdAt  DateTime  @default(now())
-  customer   Customer? @relation(fields: [customerId], references: [id])
-  customerId String?
-  discount   Float?
-  id         String    @id @default(cuid())
-  product    Product?  @relation(fields: [productId], references: [id])
-  productId  String?
-  quantity   Int?
-  totalPrice Int?
-  updatedAt  DateTime  @updatedAt
+model Document {
+  actionEvents   ActionEvent[]
+  archiveds      Archived[]
+  authorId       String
+  childDocuments Document[]    @relation(name: "childDocuments")
+  collectionId   String?
+  comments       Comment[]
+  createdAt      DateTime      @default(now())
+  documents      Document[]    @relation(name: "childDocuments")
+  emoji          String?
+  id             String        @id @default(cuid())
+  isFullWidth    Boolean?
+  isPublic       Boolean
+  members        Member[]
+  publishedAt    DateTime?     @updatedAt
+  revision       Int?
+  templateId     String?
+  text           String?
+  title          String
+  updatedAt      DateTime      @updatedAt
 }
 
-model Customer {
-  address   Address? @relation(fields: [addressId], references: [id])
-  addressId String?
-  createdAt DateTime @default(now())
-  email     String?
-  firstName String?
-  id        String   @id @default(cuid())
-  lastName  String?
-  orders    Order[]
-  phone     String?
-  updatedAt DateTime @updatedAt
+model Collection {
+  actionEvents       ActionEvent[]
+  archiveds          Archived[]
+  authorId           String        @unique
+  canShare           Boolean?
+  childCollectionIds String?
+  createdAt          DateTime      @default(now())
+  description        String?
+  downloadPermission Json
+  icon               String?
+  id                 String        @id @default(cuid())
+  index              String?
+  isSaving           Boolean?
+  members            Member[]
+  name               String
+  parentCollectionId String?       @unique
+  updatedAt          DateTime      @updatedAt
+  url                String?       @unique
+  workspaceId        String?       @unique
 }
 
-model Address {
-  address_1 String?
-  address_2 String?
-  city      String?
-  createdAt DateTime   @default(now())
-  customers Customer[]
-  id        String     @id @default(cuid())
-  state     String?
-  updatedAt DateTime   @updatedAt
-  zip       Int?
+model Member {
+  collection   Collection? @relation(fields: [collectionId], references: [id])
+  collectionId String?
+  createdAt    DateTime    @default(now())
+  document     Document[]
+  id           String      @id @default(cuid())
+  role         Json
+  updatedAt    DateTime    @updatedAt
+  userId       String?
 }
 
-model Product {
-  createdAt   DateTime @default(now())
-  description String?
-  id          String   @id @default(cuid())
-  itemPrice   Float?
-  name        String?
-  orders      Order[]
-  updatedAt   DateTime @updatedAt
+model Archived {
+  collections Collection[]
+  createdAt   DateTime     @default(now())
+  documents   Document[]
+  id          String       @id @default(cuid())
+  updatedAt   DateTime     @updatedAt
+  userId      String       @unique
+}
+
+model Comment {
+  comments        Comment[]          @relation(name: "parentCommentId")
+  content         String
+  createdAt       DateTime           @default(now())
+  document        Document?          @relation(fields: [documentId], references: [id])
+  documentId      String?
+  id              String             @id @default(cuid())
+  parentCommentId Comment?           @relation(name: "parentCommentId", fields: [id], references: [id])
+  position        Position?
+  status          EnumCommentStatus?
+  updatedAt       DateTime           @updatedAt
+  userId          String             @unique
+}
+
+model ActionEvent {
+  action       EnumActionEventAction
+  actor        String?
+  assignee     String?
+  assigner     String?
+  collection Collection?           @relation(fields: [collectionId], references: [id])
+  collectionId String?
+  createdAt    DateTime              @default(now())
+  documentId   Document?             @relation(fields: [id], references: [id])
+  id           String                @id @default(cuid())
+}
+
+model Position {
+  col        Int
+  comments   Comment? @relation(fields: [commentsId], references: [id])
+  commentsId String?  @unique
+  content    String?
+  createdAt  DateTime @default(now())
+  id         String   @id @default(cuid())
+  line       Int
+  toCol      String?
+  toLine     String?
+  updatedAt  DateTime @updatedAt
+}
+
+enum EnumCommentStatus {
+  Done
+  Todo
+  Doing
+}
+
+enum EnumActionEventAction {
+  Download
+  Upload
+  Edit
+  Delete
+  AddRole
+  RemoveRole
+  Duplicate
+  Comment
+  Share
+  Assign
+  Star
+  Public
+  Private
 }
