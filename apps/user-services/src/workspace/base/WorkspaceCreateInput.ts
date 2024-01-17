@@ -11,7 +11,15 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, IsBoolean } from "class-validator";
+import {
+  IsString,
+  IsOptional,
+  IsBoolean,
+  ValidateNested,
+} from "class-validator";
+import { TeamCreateNestedManyWithoutWorkspacesInput } from "./TeamCreateNestedManyWithoutWorkspacesInput";
+import { Type } from "class-transformer";
+import { UserCreateNestedManyWithoutWorkspacesInput } from "./UserCreateNestedManyWithoutWorkspacesInput";
 
 @InputType()
 class WorkspaceCreateInput {
@@ -27,15 +35,12 @@ class WorkspaceCreateInput {
   domain?: string | null;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: Boolean,
   })
   @IsBoolean()
-  @IsOptional()
-  @Field(() => Boolean, {
-    nullable: true,
-  })
-  isPublic?: boolean | null;
+  @Field(() => Boolean)
+  isPublic!: boolean;
 
   @ApiProperty({
     required: true,
@@ -47,6 +52,18 @@ class WorkspaceCreateInput {
 
   @ApiProperty({
     required: false,
+    type: () => TeamCreateNestedManyWithoutWorkspacesInput,
+  })
+  @ValidateNested()
+  @Type(() => TeamCreateNestedManyWithoutWorkspacesInput)
+  @IsOptional()
+  @Field(() => TeamCreateNestedManyWithoutWorkspacesInput, {
+    nullable: true,
+  })
+  teams?: TeamCreateNestedManyWithoutWorkspacesInput;
+
+  @ApiProperty({
+    required: false,
     type: String,
   })
   @IsString()
@@ -55,6 +72,18 @@ class WorkspaceCreateInput {
     nullable: true,
   })
   url?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserCreateNestedManyWithoutWorkspacesInput,
+  })
+  @ValidateNested()
+  @Type(() => UserCreateNestedManyWithoutWorkspacesInput)
+  @IsOptional()
+  @Field(() => UserCreateNestedManyWithoutWorkspacesInput, {
+    nullable: true,
+  })
+  user?: UserCreateNestedManyWithoutWorkspacesInput;
 }
 
 export { WorkspaceCreateInput as WorkspaceCreateInput };

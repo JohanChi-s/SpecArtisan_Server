@@ -11,7 +11,15 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, IsBoolean } from "class-validator";
+import {
+  IsString,
+  IsOptional,
+  IsBoolean,
+  ValidateNested,
+} from "class-validator";
+import { TeamUpdateManyWithoutWorkspacesInput } from "./TeamUpdateManyWithoutWorkspacesInput";
+import { Type } from "class-transformer";
+import { UserUpdateManyWithoutWorkspacesInput } from "./UserUpdateManyWithoutWorkspacesInput";
 
 @InputType()
 class WorkspaceUpdateInput {
@@ -35,7 +43,7 @@ class WorkspaceUpdateInput {
   @Field(() => Boolean, {
     nullable: true,
   })
-  isPublic?: boolean | null;
+  isPublic?: boolean;
 
   @ApiProperty({
     required: false,
@@ -50,6 +58,18 @@ class WorkspaceUpdateInput {
 
   @ApiProperty({
     required: false,
+    type: () => TeamUpdateManyWithoutWorkspacesInput,
+  })
+  @ValidateNested()
+  @Type(() => TeamUpdateManyWithoutWorkspacesInput)
+  @IsOptional()
+  @Field(() => TeamUpdateManyWithoutWorkspacesInput, {
+    nullable: true,
+  })
+  teams?: TeamUpdateManyWithoutWorkspacesInput;
+
+  @ApiProperty({
+    required: false,
     type: String,
   })
   @IsString()
@@ -58,6 +78,18 @@ class WorkspaceUpdateInput {
     nullable: true,
   })
   url?: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => UserUpdateManyWithoutWorkspacesInput,
+  })
+  @ValidateNested()
+  @Type(() => UserUpdateManyWithoutWorkspacesInput)
+  @IsOptional()
+  @Field(() => UserUpdateManyWithoutWorkspacesInput, {
+    nullable: true,
+  })
+  user?: UserUpdateManyWithoutWorkspacesInput;
 }
 
 export { WorkspaceUpdateInput as WorkspaceUpdateInput };

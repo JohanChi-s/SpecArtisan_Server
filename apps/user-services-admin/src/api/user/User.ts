@@ -1,4 +1,7 @@
+import { Profile } from "../profile/Profile";
 import { JsonValue } from "type-fest";
+import { Team } from "../team/Team";
+import { Workspace } from "../workspace/Workspace";
 
 export type User = {
   createdAt: Date;
@@ -11,8 +14,11 @@ export type User = {
   language: string | null;
   lastActiveAt: Date | null;
   lastName: string | null;
+  profile?: Profile | null;
   profileId: string;
   roles: JsonValue;
+  teams?: Array<Team>;
   updatedAt: Date;
   username: string;
+  workspaces?: Array<Workspace>;
 };

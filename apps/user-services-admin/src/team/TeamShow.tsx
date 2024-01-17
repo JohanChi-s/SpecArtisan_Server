@@ -24,7 +24,6 @@ export const TeamShow = (props: ShowProps): React.ReactElement => {
         <TextField label="Theme" source="theme" />
         <DateField source="updatedAt" label="Updated At" />
         <TextField label="Url" source="url" />
-        <TextField label="Workspace Id" source="workspaceId" />
       </SimpleShowLayout>
     </Show>
   );

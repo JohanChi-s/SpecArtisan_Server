@@ -13,9 +13,11 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { Type } from "class-transformer";
-import { IsOptional } from "class-validator";
+import { IsOptional, ValidateNested } from "class-validator";
 import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
 import { StringFilter } from "../../util/StringFilter";
+import { UserListRelationFilter } from "../../user/base/UserListRelationFilter";
+import { WorkspaceListRelationFilter } from "../../workspace/base/WorkspaceListRelationFilter";
 
 @InputType()
 class TeamWhereInput {
@@ -131,14 +133,27 @@ class TeamWhereInput {
 
   @ApiProperty({
     required: false,
-    type: StringNullableFilter,
+    type: () => UserListRelationFilter,
   })
-  @Type(() => StringNullableFilter)
+  @ValidateNested()
+  @Type(() => UserListRelationFilter)
   @IsOptional()
-  @Field(() => StringNullableFilter, {
+  @Field(() => UserListRelationFilter, {
     nullable: true,
   })
-  workspaceId?: StringNullableFilter;
+  users?: UserListRelationFilter;
+
+  @ApiProperty({
+    required: false,
+    type: () => WorkspaceListRelationFilter,
+  })
+  @ValidateNested()
+  @Type(() => WorkspaceListRelationFilter)
+  @IsOptional()
+  @Field(() => WorkspaceListRelationFilter, {
+    nullable: true,
+  })
+  workspaces?: WorkspaceListRelationFilter;
 }
 
 export { TeamWhereInput as TeamWhereInput };

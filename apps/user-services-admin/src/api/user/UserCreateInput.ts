@@ -1,4 +1,7 @@
+import { ProfileWhereUniqueInput } from "../profile/ProfileWhereUniqueInput";
 import { InputJsonValue } from "../../types";
+import { TeamCreateNestedManyWithoutUsersInput } from "./TeamCreateNestedManyWithoutUsersInput";
+import { WorkspaceCreateNestedManyWithoutUsersInput } from "./WorkspaceCreateNestedManyWithoutUsersInput";
 
 export type UserCreateInput = {
   email: string;
@@ -9,7 +12,10 @@ export type UserCreateInput = {
   language?: string | null;
   lastName?: string | null;
   password: string;
+  profile?: ProfileWhereUniqueInput | null;
   profileId: string;
   roles: InputJsonValue;
+  teams?: TeamCreateNestedManyWithoutUsersInput;
   username: string;
+  workspaces?: WorkspaceCreateNestedManyWithoutUsersInput;
 };

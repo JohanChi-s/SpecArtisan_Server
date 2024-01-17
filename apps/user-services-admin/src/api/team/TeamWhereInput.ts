@@ -1,6 +1,8 @@
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
 import { StringFilter } from "../../util/StringFilter";
+import { UserListRelationFilter } from "../user/UserListRelationFilter";
+import { WorkspaceListRelationFilter } from "../workspace/WorkspaceListRelationFilter";
 
 export type TeamWhereInput = {
   avatarUrl?: StringNullableFilter;
@@ -13,5 +15,6 @@ export type TeamWhereInput = {
   subDomain?: StringNullableFilter;
   theme?: StringNullableFilter;
   url?: StringNullableFilter;
-  workspaceId?: StringNullableFilter;
+  users?: UserListRelationFilter;
+  workspaces?: WorkspaceListRelationFilter;
 };

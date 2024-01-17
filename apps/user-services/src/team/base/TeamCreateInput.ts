@@ -11,7 +11,15 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, IsBoolean } from "class-validator";
+import {
+  IsString,
+  IsOptional,
+  IsBoolean,
+  ValidateNested,
+} from "class-validator";
+import { UserCreateNestedManyWithoutTeamsInput } from "./UserCreateNestedManyWithoutTeamsInput";
+import { Type } from "class-transformer";
+import { WorkspaceCreateNestedManyWithoutTeamsInput } from "./WorkspaceCreateNestedManyWithoutTeamsInput";
 
 @InputType()
 class TeamCreateInput {
@@ -116,14 +124,27 @@ class TeamCreateInput {
 
   @ApiProperty({
     required: false,
-    type: String,
+    type: () => UserCreateNestedManyWithoutTeamsInput,
   })
-  @IsString()
+  @ValidateNested()
+  @Type(() => UserCreateNestedManyWithoutTeamsInput)
   @IsOptional()
-  @Field(() => String, {
+  @Field(() => UserCreateNestedManyWithoutTeamsInput, {
     nullable: true,
   })
-  workspaceId?: string | null;
+  users?: UserCreateNestedManyWithoutTeamsInput;
+
+  @ApiProperty({
+    required: false,
+    type: () => WorkspaceCreateNestedManyWithoutTeamsInput,
+  })
+  @ValidateNested()
+  @Type(() => WorkspaceCreateNestedManyWithoutTeamsInput)
+  @IsOptional()
+  @Field(() => WorkspaceCreateNestedManyWithoutTeamsInput, {
+    nullable: true,
+  })
+  workspaces?: WorkspaceCreateNestedManyWithoutTeamsInput;
 }
 
 export { TeamCreateInput as TeamCreateInput };

@@ -10,7 +10,13 @@ https://docs.amplication.com/how-to/custom-code
 ------------------------------------------------------------------------------
   */
 import { PrismaService } from "../../prisma/prisma.service";
-import { Prisma, Workspace } from "@prisma/client";
+
+import {
+  Prisma,
+  Workspace, // @ts-ignore
+  Team, // @ts-ignore
+  User,
+} from "@prisma/client";
 
 export class WorkspaceServiceBase {
   constructor(protected readonly prisma: PrismaService) {}
@@ -45,5 +51,27 @@ export class WorkspaceServiceBase {
     args: Prisma.SelectSubset<T, Prisma.WorkspaceDeleteArgs>
   ): Promise<Workspace> {
     return this.prisma.workspace.delete(args);
+  }
+
+  async findTeams(
+    parentId: string,
+    args: Prisma.TeamFindManyArgs
+  ): Promise<Team[]> {
+    return this.prisma.workspace
+      .findUniqueOrThrow({
+        where: { id: parentId },
+      })
+      .teams(args);
+  }
+
+  async findUser(
+    parentId: string,
+    args: Prisma.UserFindManyArgs
+  ): Promise<User[]> {
+    return this.prisma.workspace
+      .findUniqueOrThrow({
+        where: { id: parentId },
+      })
+      .user(args);
   }
 }

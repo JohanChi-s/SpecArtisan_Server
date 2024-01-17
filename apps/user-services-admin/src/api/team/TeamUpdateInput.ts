@@ -1,3 +1,6 @@
+import { UserUpdateManyWithoutTeamsInput } from "./UserUpdateManyWithoutTeamsInput";
+import { WorkspaceUpdateManyWithoutTeamsInput } from "./WorkspaceUpdateManyWithoutTeamsInput";
+
 export type TeamUpdateInput = {
   avatarUrl?: string | null;
   canComment?: boolean | null;
@@ -8,5 +11,6 @@ export type TeamUpdateInput = {
   subDomain?: string | null;
   theme?: string | null;
   url?: string | null;
-  workspaceId?: string | null;
+  users?: UserUpdateManyWithoutTeamsInput;
+  workspaces?: WorkspaceUpdateManyWithoutTeamsInput;
 };

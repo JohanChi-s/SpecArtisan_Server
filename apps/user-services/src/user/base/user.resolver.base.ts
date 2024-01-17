@@ -27,6 +27,11 @@ import { UserFindUniqueArgs } from "./UserFindUniqueArgs";
 import { CreateUserArgs } from "./CreateUserArgs";
 import { UpdateUserArgs } from "./UpdateUserArgs";
 import { DeleteUserArgs } from "./DeleteUserArgs";
+import { TeamFindManyArgs } from "../../team/base/TeamFindManyArgs";
+import { Team } from "../../team/base/Team";
+import { WorkspaceFindManyArgs } from "../../workspace/base/WorkspaceFindManyArgs";
+import { Workspace } from "../../workspace/base/Workspace";
+import { Profile } from "../../profile/base/Profile";
 import { UserService } from "../user.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => User)
@@ -82,7 +87,15 @@ export class UserResolverBase {
   async createUser(@graphql.Args() args: CreateUserArgs): Promise<User> {
     return await this.service.createUser({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        profile: args.data.profile
+          ? {
+              connect: args.data.profile,
+            }
+          : undefined,
+      },
     });
   }
 
@@ -97,7 +110,15 @@ export class UserResolverBase {
     try {
       return await this.service.updateUser({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          profile: args.data.profile
+            ? {
+                connect: args.data.profile,
+              }
+            : undefined,
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -126,5 +147,64 @@ export class UserResolverBase {
       }
       throw error;
     }
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [Team], { name: "teams" })
+  @nestAccessControl.UseRoles({
+    resource: "Team",
+    action: "read",
+    possession: "any",
+  })
+  async findTeams(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: TeamFindManyArgs
+  ): Promise<Team[]> {
+    const results = await this.service.findTeams(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => [Workspace], { name: "workspaces" })
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "read",
+    possession: "any",
+  })
+  async findWorkspaces(
+    @graphql.Parent() parent: User,
+    @graphql.Args() args: WorkspaceFindManyArgs
+  ): Promise<Workspace[]> {
+    const results = await this.service.findWorkspaces(parent.id, args);
+
+    if (!results) {
+      return [];
+    }
+
+    return results;
+  }
+
+  @common.UseInterceptors(AclFilterResponseInterceptor)
+  @graphql.ResolveField(() => Profile, {
+    nullable: true,
+    name: "profile",
+  })
+  @nestAccessControl.UseRoles({
+    resource: "Profile",
+    action: "read",
+    possession: "any",
+  })
+  async getProfile(@graphql.Parent() parent: User): Promise<Profile | null> {
+    const result = await this.service.getProfile(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 }

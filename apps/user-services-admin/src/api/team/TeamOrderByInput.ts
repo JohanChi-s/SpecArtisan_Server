@@ -13,5 +13,4 @@ export type TeamOrderByInput = {
   theme?: SortOrder;
   updatedAt?: SortOrder;
   url?: SortOrder;
-  workspaceId?: SortOrder;
 };

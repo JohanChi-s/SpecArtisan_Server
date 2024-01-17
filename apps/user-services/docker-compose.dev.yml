@@ -1,14 +1,5 @@
 version: "3"
 services:
-  db:
-    image: postgres:12
-    ports:
-      - ${DB_PORT}:5432
-    environment:
-      POSTGRES_USER: ${DB_USER}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-    volumes:
-      - postgres:/var/lib/postgresql/data
   keycloak:
     image: quay.io/keycloak/keycloak
     command: -v start-dev --import-realm
@@ -41,6 +32,15 @@ services:
       - --config=/etc/otel-config.yml
     depends_on:
       - jaeger
+  db:
+    image: postgres:12
+    ports:
+      - ${DB_PORT}:5432
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - postgres:/var/lib/postgresql/data
   redis:
     container_name: ${REDIS_HOST}
     image: redis:7

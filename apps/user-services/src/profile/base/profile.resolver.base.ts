@@ -19,6 +19,7 @@ import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { Public } from "../../decorators/public.decorator";
 import { Profile } from "./Profile";
 import { ProfileCountArgs } from "./ProfileCountArgs";
 import { ProfileFindManyArgs } from "./ProfileFindManyArgs";
@@ -26,6 +27,7 @@ import { ProfileFindUniqueArgs } from "./ProfileFindUniqueArgs";
 import { CreateProfileArgs } from "./CreateProfileArgs";
 import { UpdateProfileArgs } from "./UpdateProfileArgs";
 import { DeleteProfileArgs } from "./DeleteProfileArgs";
+import { User } from "../../user/base/User";
 import { ProfileService } from "../profile.service";
 @common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Profile)
@@ -92,7 +94,13 @@ export class ProfileResolverBase {
   ): Promise<Profile> {
     return await this.service.createProfile({
       ...args,
-      data: args.data,
+      data: {
+        ...args.data,
+
+        user: {
+          connect: args.data.user,
+        },
+      },
     });
   }
 
@@ -109,7 +117,13 @@ export class ProfileResolverBase {
     try {
       return await this.service.updateProfile({
         ...args,
-        data: args.data,
+        data: {
+          ...args.data,
+
+          user: {
+            connect: args.data.user,
+          },
+        },
       });
     } catch (error) {
       if (isRecordNotFoundError(error)) {
@@ -140,5 +154,19 @@ export class ProfileResolverBase {
       }
       throw error;
     }
+  }
+
+  @Public()
+  @graphql.ResolveField(() => User, {
+    nullable: true,
+    name: "user",
+  })
+  async getUser(@graphql.Parent() parent: Profile): Promise<User | null> {
+    const result = await this.service.getUser(parent.id);
+
+    if (!result) {
+      return null;
+    }
+    return result;
   }
 }

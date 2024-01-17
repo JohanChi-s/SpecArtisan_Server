@@ -1,3 +1,6 @@
+import { UserCreateNestedManyWithoutTeamsInput } from "./UserCreateNestedManyWithoutTeamsInput";
+import { WorkspaceCreateNestedManyWithoutTeamsInput } from "./WorkspaceCreateNestedManyWithoutTeamsInput";
+
 export type TeamCreateInput = {
   avatarUrl?: string | null;
   canComment?: boolean | null;
@@ -8,5 +11,6 @@ export type TeamCreateInput = {
   subDomain?: string | null;
   theme?: string | null;
   url?: string | null;
-  workspaceId?: string | null;
+  users?: UserCreateNestedManyWithoutTeamsInput;
+  workspaces?: WorkspaceCreateNestedManyWithoutTeamsInput;
 };

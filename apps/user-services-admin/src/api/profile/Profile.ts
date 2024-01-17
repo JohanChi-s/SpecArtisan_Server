@@ -1,3 +1,5 @@
+import { User } from "../user/User";
+
 export type Profile = {
   address: string | null;
   age: number | null;
@@ -6,5 +8,5 @@ export type Profile = {
   fullName: string | null;
   id: string;
   updatedAt: Date;
-  userId: string;
+  user?: User;
 };

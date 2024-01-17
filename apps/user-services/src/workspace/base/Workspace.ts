@@ -11,8 +11,16 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsDate, IsString, IsOptional, IsBoolean } from "class-validator";
+import {
+  IsDate,
+  IsString,
+  IsOptional,
+  IsBoolean,
+  ValidateNested,
+} from "class-validator";
 import { Type } from "class-transformer";
+import { Team } from "../../team/base/Team";
+import { User } from "../../user/base/User";
 
 @ObjectType()
 class Workspace {
@@ -44,15 +52,12 @@ class Workspace {
   id!: string;
 
   @ApiProperty({
-    required: false,
+    required: true,
     type: Boolean,
   })
   @IsBoolean()
-  @IsOptional()
-  @Field(() => Boolean, {
-    nullable: true,
-  })
-  isPublic!: boolean | null;
+  @Field(() => Boolean)
+  isPublic!: boolean;
 
   @ApiProperty({
     required: true,
@@ -61,6 +66,15 @@ class Workspace {
   @IsString()
   @Field(() => String)
   name!: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => [Team],
+  })
+  @ValidateNested()
+  @Type(() => Team)
+  @IsOptional()
+  teams?: Array<Team>;
 
   @ApiProperty({
     required: true,
@@ -80,6 +94,15 @@ class Workspace {
     nullable: true,
   })
   url!: string | null;
+
+  @ApiProperty({
+    required: false,
+    type: () => [User],
+  })
+  @ValidateNested()
+  @Type(() => User)
+  @IsOptional()
+  user?: Array<User>;
 }
 
 export { Workspace as Workspace };

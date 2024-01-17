@@ -11,10 +11,19 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import { IsString, IsOptional, IsBoolean } from "class-validator";
+import {
+  IsString,
+  IsOptional,
+  IsBoolean,
+  ValidateNested,
+} from "class-validator";
+import { ProfileWhereUniqueInput } from "../../profile/base/ProfileWhereUniqueInput";
+import { Type } from "class-transformer";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { InputJsonValue } from "../../types";
+import { TeamUpdateManyWithoutUsersInput } from "./TeamUpdateManyWithoutUsersInput";
+import { WorkspaceUpdateManyWithoutUsersInput } from "./WorkspaceUpdateManyWithoutUsersInput";
 
 @InputType()
 class UserUpdateInput {
@@ -108,6 +117,18 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
+    type: () => ProfileWhereUniqueInput,
+  })
+  @ValidateNested()
+  @Type(() => ProfileWhereUniqueInput)
+  @IsOptional()
+  @Field(() => ProfileWhereUniqueInput, {
+    nullable: true,
+  })
+  profile?: ProfileWhereUniqueInput | null;
+
+  @ApiProperty({
+    required: false,
     type: String,
   })
   @IsString()
@@ -129,6 +150,18 @@ class UserUpdateInput {
 
   @ApiProperty({
     required: false,
+    type: () => TeamUpdateManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => TeamUpdateManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => TeamUpdateManyWithoutUsersInput, {
+    nullable: true,
+  })
+  teams?: TeamUpdateManyWithoutUsersInput;
+
+  @ApiProperty({
+    required: false,
     type: String,
   })
   @IsString()
@@ -137,6 +170,18 @@ class UserUpdateInput {
     nullable: true,
   })
   username?: string;
+
+  @ApiProperty({
+    required: false,
+    type: () => WorkspaceUpdateManyWithoutUsersInput,
+  })
+  @ValidateNested()
+  @Type(() => WorkspaceUpdateManyWithoutUsersInput)
+  @IsOptional()
+  @Field(() => WorkspaceUpdateManyWithoutUsersInput, {
+    nullable: true,
+  })
+  workspaces?: WorkspaceUpdateManyWithoutUsersInput;
 }
 
 export { UserUpdateInput as UserUpdateInput };

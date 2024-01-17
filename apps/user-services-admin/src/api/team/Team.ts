@@ -1,3 +1,6 @@
+import { User } from "../user/User";
+import { Workspace } from "../workspace/Workspace";
+
 export type Team = {
   avatarUrl: string | null;
   canComment: boolean | null;
@@ -11,5 +14,6 @@ export type Team = {
   theme: string | null;
   updatedAt: Date;
   url: string | null;
-  workspaceId: string | null;
+  users?: Array<User>;
+  workspaces?: Array<Workspace>;
 };

@@ -1,6 +1,7 @@
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { IntNullableFilter } from "../../util/IntNullableFilter";
 import { StringFilter } from "../../util/StringFilter";
+import { UserWhereUniqueInput } from "../user/UserWhereUniqueInput";
 
 export type ProfileWhereInput = {
   address?: StringNullableFilter;
@@ -8,5 +9,5 @@ export type ProfileWhereInput = {
   avatarUrl?: StringNullableFilter;
   fullName?: StringNullableFilter;
   id?: StringFilter;
-  userId?: StringFilter;
+  user?: UserWhereUniqueInput;
 };
