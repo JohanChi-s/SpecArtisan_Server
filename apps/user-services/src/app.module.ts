@@ -12,6 +12,7 @@ import {
 import { HttpInstrumentation } from "@opentelemetry/instrumentation-http";
 import { OTLPTraceExporter } from "@opentelemetry/exporter-trace-otlp-grpc";
 import { BatchSpanProcessor } from "@opentelemetry/sdk-trace-node";
+import { RabbitMQModule } from "./rabbitmq/rabbitmq.module";
 import { CacheModule } from "@nestjs/cache-manager";
 import { redisStore } from "cache-manager-ioredis-yet";
 import { UserModule } from "./user/user.module";
@@ -38,6 +39,7 @@ import { AuthModule } from "./auth/auth.module";
     ACLModule,
     AuthModule,
     LoggerModule,
+    RabbitMQModule,
     UserModule,
     TeamModule,
     WorkspaceModule,
