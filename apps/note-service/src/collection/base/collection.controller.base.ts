@@ -36,6 +36,9 @@ export class CollectionControllerBase {
   constructor(protected readonly service: CollectionService) {}
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Collection })
+  @swagger.ApiBody({
+    type: CollectionCreateInput,
+  })
   async createCollection(
     @common.Body() data: CollectionCreateInput
   ): Promise<Collection> {
@@ -125,6 +128,9 @@ export class CollectionControllerBase {
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Collection })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @swagger.ApiBody({
+    type: CollectionUpdateInput,
+  })
   async updateCollection(
     @common.Param() params: CollectionWhereUniqueInput,
     @common.Body() data: CollectionUpdateInput

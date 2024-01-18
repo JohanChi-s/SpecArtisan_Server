@@ -1,4 +1,4 @@
-# Default values for user-services. This is a YAML-formatted file.
+# Default values for note-service. This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
 replicaCount: 1
@@ -13,23 +13,6 @@ variables:
     BCRYPT_SALT: "10"
     COMPOSE_PROJECT_NAME: "amp_${resourceId}"
     PORT: "3000"
-    KEYCLOAK_URL: "http://localhost:8080"
-    KEYCLOAK_REALM: "amplication-sample-realm"
-    KEYCLOAK_CLIENT_ID: "amplication-server"
-    KEYCLOAK_ADMIN_USERNAME: "admin"
-    KEYCLOAK_ADMIN_PASSWORD: "password"
-    KEYCLOAK_PORT: "8080"
-    APP_MODE: "both"
-    HTTPS_PORT: "443"
-    SSL_CERT_PATH: "./.certs/server.crt"
-    SSL_KEY_PATH: "./.certs/server.key"
-    CA_CERT_PATH: "./.certs/ca.crt"
-    OTEL_COLLECTOR_HOST: "localhost"
-    OTEL_COLLECTOR_PORT_GRPC: "4317"
-    OTEL_COLLECTOR_PORT_HTTP: "4318"
-    OTEL_EXPORTER_OTLP_ENDPOINT: "http://${OTEL_COLLECTOR_HOST}:${OTEL_COLLECTOR_PORT_HTTP}"
-    JAEGER_AGENT_HOST: "jaeger"
-    JAEGER_AGENT_PORT: "16686"
   secret: {}
 
 imagePullSecrets: []
@@ -63,7 +46,7 @@ ingress:
         - path: /
           pathType: ImplementationSpecific
   tls: []
-  #  - secretName: chart-user-services-tls
+  #  - secretName: chart-note-service-tls
   #    hosts:
   #      - server.example.com
 
