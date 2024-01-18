@@ -27,6 +27,9 @@ export class PositionControllerBase {
   constructor(protected readonly service: PositionService) {}
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Position })
+  @swagger.ApiBody({
+    type: PositionCreateInput,
+  })
   async createPosition(
     @common.Body() data: PositionCreateInput
   ): Promise<Position> {
@@ -124,6 +127,9 @@ export class PositionControllerBase {
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Position })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @swagger.ApiBody({
+    type: PositionUpdateInput,
+  })
   async updatePosition(
     @common.Param() params: PositionWhereUniqueInput,
     @common.Body() data: PositionUpdateInput

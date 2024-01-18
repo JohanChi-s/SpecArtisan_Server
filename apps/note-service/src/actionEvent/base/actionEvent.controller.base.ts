@@ -27,6 +27,9 @@ export class ActionEventControllerBase {
   constructor(protected readonly service: ActionEventService) {}
   @common.Post()
   @swagger.ApiCreatedResponse({ type: ActionEvent })
+  @swagger.ApiBody({
+    type: ActionEventCreateInput,
+  })
   async createActionEvent(
     @common.Body() data: ActionEventCreateInput
   ): Promise<ActionEvent> {
@@ -145,6 +148,9 @@ export class ActionEventControllerBase {
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: ActionEvent })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @swagger.ApiBody({
+    type: ActionEventUpdateInput,
+  })
   async updateActionEvent(
     @common.Param() params: ActionEventWhereUniqueInput,
     @common.Body() data: ActionEventUpdateInput

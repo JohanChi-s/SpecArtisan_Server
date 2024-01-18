@@ -30,6 +30,9 @@ export class MemberControllerBase {
   constructor(protected readonly service: MemberService) {}
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Member })
+  @swagger.ApiBody({
+    type: MemberCreateInput,
+  })
   async createMember(@common.Body() data: MemberCreateInput): Promise<Member> {
     return await this.service.createMember({
       data: {
@@ -113,6 +116,9 @@ export class MemberControllerBase {
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Member })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @swagger.ApiBody({
+    type: MemberUpdateInput,
+  })
   async updateMember(
     @common.Param() params: MemberWhereUniqueInput,
     @common.Body() data: MemberUpdateInput
