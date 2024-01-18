@@ -33,6 +33,9 @@ export class ArchivedControllerBase {
   constructor(protected readonly service: ArchivedService) {}
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Archived })
+  @swagger.ApiBody({
+    type: ArchivedCreateInput,
+  })
   async createArchived(
     @common.Body() data: ArchivedCreateInput
   ): Promise<Archived> {
@@ -89,6 +92,9 @@ export class ArchivedControllerBase {
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Archived })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @swagger.ApiBody({
+    type: ArchivedUpdateInput,
+  })
   async updateArchived(
     @common.Param() params: ArchivedWhereUniqueInput,
     @common.Body() data: ArchivedUpdateInput

@@ -27,6 +27,9 @@ export class CommentControllerBase {
   constructor(protected readonly service: CommentService) {}
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Comment })
+  @swagger.ApiBody({
+    type: CommentCreateInput,
+  })
   async createComment(
     @common.Body() data: CommentCreateInput
   ): Promise<Comment> {
@@ -169,6 +172,9 @@ export class CommentControllerBase {
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Comment })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @swagger.ApiBody({
+    type: CommentUpdateInput,
+  })
   async updateComment(
     @common.Param() params: CommentWhereUniqueInput,
     @common.Body() data: CommentUpdateInput
