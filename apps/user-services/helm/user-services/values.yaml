@@ -30,20 +30,6 @@ variables:
     OTEL_EXPORTER_OTLP_ENDPOINT: "http://${OTEL_COLLECTOR_HOST}:${OTEL_COLLECTOR_PORT_HTTP}"
     JAEGER_AGENT_HOST: "jaeger"
     JAEGER_AGENT_PORT: "16686"
-    LOG_LEVEL: "info"
-    SERVICE_NAME: "User Services"
-    DB_URL: "postgres://admin:admin@localhost:5432/my-db"
-    DB_USER: "admin"
-    DB_PASSWORD: "admin"
-    DB_PORT: "5432"
-    DB_NAME: "my-db"
-    JWT_SECRET_KEY: "Change_ME!!!"
-    JWT_EXPIRATION: "2d"
-    REDIS_HOST: "localhost"
-    REDIS_PORT: "6379"
-    REDIS_TTL: "5000"
-    REDIS_USERNAME: ""
-    REDIS_PASSWORD: ""
   secret: {}
 
 imagePullSecrets: []
