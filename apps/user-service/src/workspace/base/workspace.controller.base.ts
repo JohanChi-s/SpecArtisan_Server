@@ -16,7 +16,11 @@ import * as errors from "../../errors";
 import { Request } from "express";
 import { plainToClass } from "class-transformer";
 import { ApiNestedQuery } from "../../decorators/api-nested-query.decorator";
+import * as nestAccessControl from "nest-access-control";
+import * as defaultAuthGuard from "../../auth/defaultAuth.guard";
 import { WorkspaceService } from "../workspace.service";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
 import { WorkspaceCreateInput } from "./WorkspaceCreateInput";
 import { Workspace } from "./Workspace";
 import { WorkspaceFindManyArgs } from "./WorkspaceFindManyArgs";
@@ -29,10 +33,27 @@ import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
 import { User } from "../../user/base/User";
 import { UserWhereUniqueInput } from "../../user/base/UserWhereUniqueInput";
 
+@swagger.ApiBearerAuth()
+@common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
 export class WorkspaceControllerBase {
-  constructor(protected readonly service: WorkspaceService) {}
+  constructor(
+    protected readonly service: WorkspaceService,
+    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
+  ) {}
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Post()
   @swagger.ApiCreatedResponse({ type: Workspace })
+  @swagger.ApiBody({
+    type: WorkspaceCreateInput,
+  })
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "create",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async createWorkspace(
     @common.Body() data: WorkspaceCreateInput
   ): Promise<Workspace> {
@@ -50,9 +71,18 @@ export class WorkspaceControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get()
   @swagger.ApiOkResponse({ type: [Workspace] })
   @ApiNestedQuery(WorkspaceFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "read",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async workspaces(@common.Req() request: Request): Promise<Workspace[]> {
     const args = plainToClass(WorkspaceFindManyArgs, request.query);
     return this.service.workspaces({
@@ -69,9 +99,18 @@ export class WorkspaceControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id")
   @swagger.ApiOkResponse({ type: Workspace })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "read",
+    possession: "own",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async workspace(
     @common.Param() params: WorkspaceWhereUniqueInput
   ): Promise<Workspace | null> {
@@ -95,9 +134,21 @@ export class WorkspaceControllerBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @common.Patch("/:id")
   @swagger.ApiOkResponse({ type: Workspace })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @swagger.ApiBody({
+    type: WorkspaceUpdateInput,
+  })
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "update",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async updateWorkspace(
     @common.Param() params: WorkspaceWhereUniqueInput,
     @common.Body() data: WorkspaceUpdateInput
@@ -129,6 +180,14 @@ export class WorkspaceControllerBase {
   @common.Delete("/:id")
   @swagger.ApiOkResponse({ type: Workspace })
   @swagger.ApiNotFoundResponse({ type: errors.NotFoundException })
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "delete",
+    possession: "any",
+  })
+  @swagger.ApiForbiddenResponse({
+    type: errors.ForbiddenException,
+  })
   async deleteWorkspace(
     @common.Param() params: WorkspaceWhereUniqueInput
   ): Promise<Workspace | null> {
@@ -155,8 +214,14 @@ export class WorkspaceControllerBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id/teams")
   @ApiNestedQuery(TeamFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "Team",
+    action: "read",
+    possession: "any",
+  })
   async findTeams(
     @common.Req() request: Request,
     @common.Param() params: WorkspaceWhereUniqueInput
@@ -188,6 +253,11 @@ export class WorkspaceControllerBase {
   }
 
   @common.Post("/:id/teams")
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "update",
+    possession: "any",
+  })
   async connectTeams(
     @common.Param() params: WorkspaceWhereUniqueInput,
     @common.Body() body: TeamWhereUniqueInput[]
@@ -205,6 +275,11 @@ export class WorkspaceControllerBase {
   }
 
   @common.Patch("/:id/teams")
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "update",
+    possession: "any",
+  })
   async updateTeams(
     @common.Param() params: WorkspaceWhereUniqueInput,
     @common.Body() body: TeamWhereUniqueInput[]
@@ -222,6 +297,11 @@ export class WorkspaceControllerBase {
   }
 
   @common.Delete("/:id/teams")
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "update",
+    possession: "any",
+  })
   async disconnectTeams(
     @common.Param() params: WorkspaceWhereUniqueInput,
     @common.Body() body: TeamWhereUniqueInput[]
@@ -238,8 +318,14 @@ export class WorkspaceControllerBase {
     });
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @common.Get("/:id/user")
   @ApiNestedQuery(UserFindManyArgs)
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "any",
+  })
   async findUser(
     @common.Req() request: Request,
     @common.Param() params: WorkspaceWhereUniqueInput
@@ -281,6 +367,11 @@ export class WorkspaceControllerBase {
   }
 
   @common.Post("/:id/user")
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "update",
+    possession: "any",
+  })
   async connectUser(
     @common.Param() params: WorkspaceWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -298,6 +389,11 @@ export class WorkspaceControllerBase {
   }
 
   @common.Patch("/:id/user")
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "update",
+    possession: "any",
+  })
   async updateUser(
     @common.Param() params: WorkspaceWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]
@@ -315,6 +411,11 @@ export class WorkspaceControllerBase {
   }
 
   @common.Delete("/:id/user")
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "update",
+    possession: "any",
+  })
   async disconnectUser(
     @common.Param() params: WorkspaceWhereUniqueInput,
     @common.Body() body: UserWhereUniqueInput[]

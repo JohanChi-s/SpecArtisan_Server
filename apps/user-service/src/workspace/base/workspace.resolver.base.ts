@@ -13,6 +13,12 @@ import * as graphql from "@nestjs/graphql";
 import { GraphQLError } from "graphql";
 import { isRecordNotFoundError } from "../../prisma.util";
 import { MetaQueryPayload } from "../../util/MetaQueryPayload";
+import * as nestAccessControl from "nest-access-control";
+import * as gqlACGuard from "../../auth/gqlAC.guard";
+import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
+import * as common from "@nestjs/common";
+import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
 import { Workspace } from "./Workspace";
 import { WorkspaceCountArgs } from "./WorkspaceCountArgs";
 import { WorkspaceFindManyArgs } from "./WorkspaceFindManyArgs";
@@ -25,10 +31,20 @@ import { Team } from "../../team/base/Team";
 import { UserFindManyArgs } from "../../user/base/UserFindManyArgs";
 import { User } from "../../user/base/User";
 import { WorkspaceService } from "../workspace.service";
+@common.UseGuards(GqlDefaultAuthGuard, gqlACGuard.GqlACGuard)
 @graphql.Resolver(() => Workspace)
 export class WorkspaceResolverBase {
-  constructor(protected readonly service: WorkspaceService) {}
+  constructor(
+    protected readonly service: WorkspaceService,
+    protected readonly rolesBuilder: nestAccessControl.RolesBuilder
+  ) {}
 
+  @graphql.Query(() => MetaQueryPayload)
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "read",
+    possession: "any",
+  })
   async _workspacesMeta(
     @graphql.Args() args: WorkspaceCountArgs
   ): Promise<MetaQueryPayload> {
@@ -38,14 +54,26 @@ export class WorkspaceResolverBase {
     };
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => [Workspace])
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "read",
+    possession: "any",
+  })
   async workspaces(
     @graphql.Args() args: WorkspaceFindManyArgs
   ): Promise<Workspace[]> {
     return this.service.workspaces(args);
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.Query(() => Workspace, { nullable: true })
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "read",
+    possession: "own",
+  })
   async workspace(
     @graphql.Args() args: WorkspaceFindUniqueArgs
   ): Promise<Workspace | null> {
@@ -56,7 +84,13 @@ export class WorkspaceResolverBase {
     return result;
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Workspace)
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "create",
+    possession: "any",
+  })
   async createWorkspace(
     @graphql.Args() args: CreateWorkspaceArgs
   ): Promise<Workspace> {
@@ -66,7 +100,13 @@ export class WorkspaceResolverBase {
     });
   }
 
+  @common.UseInterceptors(AclValidateRequestInterceptor)
   @graphql.Mutation(() => Workspace)
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "update",
+    possession: "any",
+  })
   async updateWorkspace(
     @graphql.Args() args: UpdateWorkspaceArgs
   ): Promise<Workspace | null> {
@@ -86,6 +126,11 @@ export class WorkspaceResolverBase {
   }
 
   @graphql.Mutation(() => Workspace)
+  @nestAccessControl.UseRoles({
+    resource: "Workspace",
+    action: "delete",
+    possession: "any",
+  })
   async deleteWorkspace(
     @graphql.Args() args: DeleteWorkspaceArgs
   ): Promise<Workspace | null> {
@@ -101,7 +146,13 @@ export class WorkspaceResolverBase {
     }
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [Team], { name: "teams" })
+  @nestAccessControl.UseRoles({
+    resource: "Team",
+    action: "read",
+    possession: "any",
+  })
   async findTeams(
     @graphql.Parent() parent: Workspace,
     @graphql.Args() args: TeamFindManyArgs
@@ -115,7 +166,13 @@ export class WorkspaceResolverBase {
     return results;
   }
 
+  @common.UseInterceptors(AclFilterResponseInterceptor)
   @graphql.ResolveField(() => [User], { name: "user" })
+  @nestAccessControl.UseRoles({
+    resource: "User",
+    action: "read",
+    possession: "any",
+  })
   async findUser(
     @graphql.Parent() parent: Workspace,
     @graphql.Args() args: UserFindManyArgs
