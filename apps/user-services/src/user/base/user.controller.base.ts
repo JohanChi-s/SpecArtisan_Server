@@ -27,12 +27,6 @@ import { User } from "./User";
 import { UserFindManyArgs } from "./UserFindManyArgs";
 import { UserWhereUniqueInput } from "./UserWhereUniqueInput";
 import { UserUpdateInput } from "./UserUpdateInput";
-import { TeamFindManyArgs } from "../../team/base/TeamFindManyArgs";
-import { Team } from "../../team/base/Team";
-import { TeamWhereUniqueInput } from "../../team/base/TeamWhereUniqueInput";
-import { WorkspaceFindManyArgs } from "../../workspace/base/WorkspaceFindManyArgs";
-import { Workspace } from "../../workspace/base/Workspace";
-import { WorkspaceWhereUniqueInput } from "../../workspace/base/WorkspaceWhereUniqueInput";
 
 @swagger.ApiBearerAuth()
 @common.UseGuards(defaultAuthGuard.DefaultAuthGuard, nestAccessControl.ACGuard)
@@ -57,15 +51,7 @@ export class UserControllerBase {
   })
   async createUser(@common.Body() data: UserCreateInput): Promise<User> {
     return await this.service.createUser({
-      data: {
-        ...data,
-
-        profile: data.profile
-          ? {
-              connect: data.profile,
-            }
-          : undefined,
-      },
+      data: data,
       select: {
         createdAt: true,
         email: true,
@@ -77,13 +63,6 @@ export class UserControllerBase {
         language: true,
         lastActiveAt: true,
         lastName: true,
-
-        profile: {
-          select: {
-            id: true,
-          },
-        },
-
         profileId: true,
         roles: true,
         updatedAt: true,
@@ -119,13 +98,6 @@ export class UserControllerBase {
         language: true,
         lastActiveAt: true,
         lastName: true,
-
-        profile: {
-          select: {
-            id: true,
-          },
-        },
-
         profileId: true,
         roles: true,
         updatedAt: true,
@@ -157,13 +129,6 @@ export class UserControllerBase {
         language: true,
         lastActiveAt: true,
         lastName: true,
-
-        profile: {
-          select: {
-            id: true,
-          },
-        },
-
         profileId: true,
         roles: true,
         updatedAt: true,
@@ -200,15 +165,7 @@ export class UserControllerBase {
     try {
       return await this.service.updateUser({
         where: params,
-        data: {
-          ...data,
-
-          profile: data.profile
-            ? {
-                connect: data.profile,
-              }
-            : undefined,
-        },
+        data: data,
         select: {
           createdAt: true,
           email: true,
@@ -220,13 +177,6 @@ export class UserControllerBase {
           language: true,
           lastActiveAt: true,
           lastName: true,
-
-          profile: {
-            select: {
-              id: true,
-            },
-          },
-
           profileId: true,
           roles: true,
           updatedAt: true,
@@ -271,13 +221,6 @@ export class UserControllerBase {
           language: true,
           lastActiveAt: true,
           lastName: true,
-
-          profile: {
-            select: {
-              id: true,
-            },
-          },
-
           profileId: true,
           roles: true,
           updatedAt: true,
@@ -292,208 +235,5 @@ export class UserControllerBase {
       }
       throw error;
     }
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.Get("/:id/teams")
-  @ApiNestedQuery(TeamFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Team",
-    action: "read",
-    possession: "any",
-  })
-  async findTeams(
-    @common.Req() request: Request,
-    @common.Param() params: UserWhereUniqueInput
-  ): Promise<Team[]> {
-    const query = plainToClass(TeamFindManyArgs, request.query);
-    const results = await this.service.findTeams(params.id, {
-      ...query,
-      select: {
-        avatarUrl: true,
-        canComment: true,
-        canShare: true,
-        createdAt: true,
-        defaultUserRole: true,
-        id: true,
-        inviteRequired: true,
-        name: true,
-        subDomain: true,
-        theme: true,
-        updatedAt: true,
-        url: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @common.Post("/:id/teams")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async connectTeams(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: TeamWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      teams: {
-        connect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Patch("/:id/teams")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async updateTeams(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: TeamWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      teams: {
-        set: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Delete("/:id/teams")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async disconnectTeams(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: TeamWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      teams: {
-        disconnect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.UseInterceptors(AclFilterResponseInterceptor)
-  @common.Get("/:id/workspaces")
-  @ApiNestedQuery(WorkspaceFindManyArgs)
-  @nestAccessControl.UseRoles({
-    resource: "Workspace",
-    action: "read",
-    possession: "any",
-  })
-  async findWorkspaces(
-    @common.Req() request: Request,
-    @common.Param() params: UserWhereUniqueInput
-  ): Promise<Workspace[]> {
-    const query = plainToClass(WorkspaceFindManyArgs, request.query);
-    const results = await this.service.findWorkspaces(params.id, {
-      ...query,
-      select: {
-        createdAt: true,
-        domain: true,
-        id: true,
-        isPublic: true,
-        name: true,
-        updatedAt: true,
-        url: true,
-      },
-    });
-    if (results === null) {
-      throw new errors.NotFoundException(
-        `No resource was found for ${JSON.stringify(params)}`
-      );
-    }
-    return results;
-  }
-
-  @common.Post("/:id/workspaces")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async connectWorkspaces(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: WorkspaceWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      workspaces: {
-        connect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Patch("/:id/workspaces")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async updateWorkspaces(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: WorkspaceWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      workspaces: {
-        set: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
-  }
-
-  @common.Delete("/:id/workspaces")
-  @nestAccessControl.UseRoles({
-    resource: "User",
-    action: "update",
-    possession: "any",
-  })
-  async disconnectWorkspaces(
-    @common.Param() params: UserWhereUniqueInput,
-    @common.Body() body: WorkspaceWhereUniqueInput[]
-  ): Promise<void> {
-    const data = {
-      workspaces: {
-        disconnect: body,
-      },
-    };
-    await this.service.updateUser({
-      where: params,
-      data,
-      select: { id: true },
-    });
   }
 }

@@ -11,20 +11,11 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { ObjectType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
-import {
-  IsDate,
-  IsString,
-  IsOptional,
-  IsBoolean,
-  ValidateNested,
-} from "class-validator";
+import { IsDate, IsString, IsOptional, IsBoolean } from "class-validator";
 import { Type } from "class-transformer";
-import { Profile } from "../../profile/base/Profile";
 import { IsJSONValue } from "../../validators";
 import { GraphQLJSON } from "graphql-type-json";
 import { JsonValue } from "type-fest";
-import { Team } from "../../team/base/Team";
-import { Workspace } from "../../workspace/base/Workspace";
 
 @ObjectType()
 class User {
@@ -127,15 +118,6 @@ class User {
   lastName!: string | null;
 
   @ApiProperty({
-    required: false,
-    type: () => Profile,
-  })
-  @ValidateNested()
-  @Type(() => Profile)
-  @IsOptional()
-  profile?: Profile | null;
-
-  @ApiProperty({
     required: true,
     type: String,
   })
@@ -149,15 +131,6 @@ class User {
   @IsJSONValue()
   @Field(() => GraphQLJSON)
   roles!: JsonValue;
-
-  @ApiProperty({
-    required: false,
-    type: () => [Team],
-  })
-  @ValidateNested()
-  @Type(() => Team)
-  @IsOptional()
-  teams?: Array<Team>;
 
   @ApiProperty({
     required: true,
@@ -174,15 +147,6 @@ class User {
   @IsString()
   @Field(() => String)
   username!: string;
-
-  @ApiProperty({
-    required: false,
-    type: () => [Workspace],
-  })
-  @ValidateNested()
-  @Type(() => Workspace)
-  @IsOptional()
-  workspaces?: Array<Workspace>;
 }
 
 export { User as User };

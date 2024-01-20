@@ -13,14 +13,11 @@ import { InputType, Field } from "@nestjs/graphql";
 import { ApiProperty } from "@nestjs/swagger";
 import { StringFilter } from "../../util/StringFilter";
 import { Type } from "class-transformer";
-import { IsOptional, ValidateNested } from "class-validator";
+import { IsOptional } from "class-validator";
 import { StringNullableFilter } from "../../util/StringNullableFilter";
 import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
 import { BooleanFilter } from "../../util/BooleanFilter";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
-import { ProfileWhereUniqueInput } from "../../profile/base/ProfileWhereUniqueInput";
-import { TeamListRelationFilter } from "../../team/base/TeamListRelationFilter";
-import { WorkspaceListRelationFilter } from "../../workspace/base/WorkspaceListRelationFilter";
 
 @InputType()
 class UserWhereInput {
@@ -125,18 +122,6 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => ProfileWhereUniqueInput,
-  })
-  @ValidateNested()
-  @Type(() => ProfileWhereUniqueInput)
-  @IsOptional()
-  @Field(() => ProfileWhereUniqueInput, {
-    nullable: true,
-  })
-  profile?: ProfileWhereUniqueInput;
-
-  @ApiProperty({
-    required: false,
     type: StringFilter,
   })
   @Type(() => StringFilter)
@@ -148,18 +133,6 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: () => TeamListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => TeamListRelationFilter)
-  @IsOptional()
-  @Field(() => TeamListRelationFilter, {
-    nullable: true,
-  })
-  teams?: TeamListRelationFilter;
-
-  @ApiProperty({
-    required: false,
     type: StringFilter,
   })
   @Type(() => StringFilter)
@@ -168,18 +141,6 @@ class UserWhereInput {
     nullable: true,
   })
   username?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: () => WorkspaceListRelationFilter,
-  })
-  @ValidateNested()
-  @Type(() => WorkspaceListRelationFilter)
-  @IsOptional()
-  @Field(() => WorkspaceListRelationFilter, {
-    nullable: true,
-  })
-  workspaces?: WorkspaceListRelationFilter;
 }
 
 export { UserWhereInput as UserWhereInput };

@@ -16,9 +16,6 @@ import { RabbitMQModule } from "./rabbitmq/rabbitmq.module";
 import { CacheModule } from "@nestjs/cache-manager";
 import { redisStore } from "cache-manager-ioredis-yet";
 import { UserModule } from "./user/user.module";
-import { TeamModule } from "./team/team.module";
-import { WorkspaceModule } from "./workspace/workspace.module";
-import { ProfileModule } from "./profile/profile.module";
 import { HealthModule } from "./health/health.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
@@ -41,9 +38,6 @@ import { AuthModule } from "./auth/auth.module";
     LoggerModule,
     RabbitMQModule,
     UserModule,
-    TeamModule,
-    WorkspaceModule,
-    ProfileModule,
     HealthModule,
     PrismaModule,
     SecretsManagerModule,

@@ -1,7 +1,4 @@
-import { ProfileWhereUniqueInput } from "../profile/ProfileWhereUniqueInput";
 import { InputJsonValue } from "../../types";
-import { TeamUpdateManyWithoutUsersInput } from "./TeamUpdateManyWithoutUsersInput";
-import { WorkspaceUpdateManyWithoutUsersInput } from "./WorkspaceUpdateManyWithoutUsersInput";
 
 export type UserUpdateInput = {
   email?: string;
@@ -12,10 +9,7 @@ export type UserUpdateInput = {
   language?: string | null;
   lastName?: string | null;
   password?: string;
-  profile?: ProfileWhereUniqueInput | null;
   profileId?: string;
   roles?: InputJsonValue;
-  teams?: TeamUpdateManyWithoutUsersInput;
   username?: string;
-  workspaces?: WorkspaceUpdateManyWithoutUsersInput;
 };

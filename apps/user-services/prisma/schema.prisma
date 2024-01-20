@@ -8,63 +8,19 @@ generator client {
 }
 
 model User {
-  createdAt    DateTime    @default(now())
-  email        String      @unique
+  createdAt    DateTime  @default(now())
+  email        String    @unique
   firstName    String?
-  id           String      @id @default(cuid())
+  id           String    @id @default(cuid())
   isActive     Boolean?
   isAdmin      Boolean
   isViewer     Boolean?
   language     String?
-  lastActiveAt DateTime?   @updatedAt
+  lastActiveAt DateTime? @updatedAt
   lastName     String?
   password     String
-  profile      Profile?
   profileId    String
   roles        Json
-  teams        Team[]
-  updatedAt    DateTime    @updatedAt
-  username     String      @unique
-  workspaces   Workspace[]
-}
-
-model Team {
-  avatarUrl       String?
-  canComment      Boolean?
-  canShare        Boolean?
-  createdAt       DateTime    @default(now())
-  defaultUserRole String?
-  id              String      @id @default(cuid())
-  inviteRequired  Boolean?
-  name            String?
-  subDomain       String?
-  theme           String?
-  updatedAt       DateTime    @updatedAt
-  url             String?
-  users           User[]
-  workspaces      Workspace[]
-}
-
-model Workspace {
-  createdAt DateTime @default(now())
-  domain    String?
-  id        String   @id @default(cuid())
-  isPublic  Boolean
-  name      String
-  teams     Team[]
-  updatedAt DateTime @updatedAt
-  url       String?
-  user      User[]
-}
-
-model Profile {
-  address   String?
-  age       Int?
-  avatarUrl String?
-  createdAt DateTime @default(now())
-  fullName  String?
-  id        String   @id @default(cuid())
-  updatedAt DateTime @updatedAt
-  user      User     @relation(fields: [id], references: [id])
-  id        String   @unique
+  updatedAt    DateTime  @updatedAt
+  username     String    @unique
 }

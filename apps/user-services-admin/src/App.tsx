@@ -14,18 +14,6 @@ import { UserList } from "./user/UserList";
 import { UserCreate } from "./user/UserCreate";
 import { UserEdit } from "./user/UserEdit";
 import { UserShow } from "./user/UserShow";
-import { TeamList } from "./team/TeamList";
-import { TeamCreate } from "./team/TeamCreate";
-import { TeamEdit } from "./team/TeamEdit";
-import { TeamShow } from "./team/TeamShow";
-import { WorkspaceList } from "./workspace/WorkspaceList";
-import { WorkspaceCreate } from "./workspace/WorkspaceCreate";
-import { WorkspaceEdit } from "./workspace/WorkspaceEdit";
-import { WorkspaceShow } from "./workspace/WorkspaceShow";
-import { ProfileList } from "./profile/ProfileList";
-import { ProfileCreate } from "./profile/ProfileCreate";
-import { ProfileEdit } from "./profile/ProfileEdit";
-import { ProfileShow } from "./profile/ProfileShow";
 
 const App = (): React.ReactElement => {
   const [dataProvider, setDataProvider] = useState<DataProvider | null>(null);
@@ -75,27 +63,6 @@ const App = (): React.ReactElement => {
           edit={UserEdit}
           create={UserCreate}
           show={UserShow}
-        />
-        <Resource
-          name="Team"
-          list={TeamList}
-          edit={TeamEdit}
-          create={TeamCreate}
-          show={TeamShow}
-        />
-        <Resource
-          name="Workspace"
-          list={WorkspaceList}
-          edit={WorkspaceEdit}
-          create={WorkspaceCreate}
-          show={WorkspaceShow}
-        />
-        <Resource
-          name="Profile"
-          list={ProfileList}
-          edit={ProfileEdit}
-          create={ProfileCreate}
-          show={ProfileShow}
         />
       </Admin>
     </div>
