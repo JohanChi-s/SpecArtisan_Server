@@ -78,6 +78,7 @@ model Comment {
   documentId      String?
   id              String             @id @default(cuid())
   parentCommentId Comment?           @relation(name: "parentCommentId", fields: [id], references: [id])
+  id              String?
   position        Position?
   status          EnumCommentStatus?
   updatedAt       DateTime           @updatedAt
@@ -89,10 +90,11 @@ model ActionEvent {
   actor        String?
   assignee     String?
   assigner     String?
-  collection Collection?           @relation(fields: [collectionId], references: [id])
-  collectionId String?
+  collectionId Collection?           @relation(fields: [id], references: [id])
+  id           String?
   createdAt    DateTime              @default(now())
   documentId   Document?             @relation(fields: [id], references: [id])
+  id           String?
   id           String                @id @default(cuid())
 }
 
