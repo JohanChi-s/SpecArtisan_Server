@@ -76,7 +76,6 @@ export class UserControllerBase {
         language: true,
         lastActiveAt: true,
         lastName: true,
-        password: true,
 
         profile: {
           select: {
@@ -119,7 +118,6 @@ export class UserControllerBase {
         language: true,
         lastActiveAt: true,
         lastName: true,
-        password: true,
 
         profile: {
           select: {
@@ -163,7 +161,6 @@ export class UserControllerBase {
         language: true,
         lastActiveAt: true,
         lastName: true,
-        password: true,
 
         profile: {
           select: {
@@ -227,7 +224,6 @@ export class UserControllerBase {
           language: true,
           lastActiveAt: true,
           lastName: true,
-          password: true,
 
           profile: {
             select: {
@@ -279,7 +275,6 @@ export class UserControllerBase {
           language: true,
           lastActiveAt: true,
           lastName: true,
-          password: true,
 
           profile: {
             select: {

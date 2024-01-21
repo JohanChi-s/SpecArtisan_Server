@@ -263,7 +263,6 @@ export class TeamControllerBase {
         language: true,
         lastActiveAt: true,
         lastName: true,
-        password: true,
 
         profile: {
           select: {

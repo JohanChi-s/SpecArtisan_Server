@@ -18,7 +18,6 @@ async function seed() {
   const data = {
     email: "example@example.com",
     isAdmin: false,
-    password: "",
     profileId: "",
 
     roles: {
