@@ -5,3 +5,4 @@
 .DS_Store
 bun.lockb
 .certs
+pnpm-lock.yaml

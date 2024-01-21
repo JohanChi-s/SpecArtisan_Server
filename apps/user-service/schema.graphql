@@ -147,6 +147,7 @@ type Query {
   team(where: TeamWhereUniqueInput!): Team
   teams(orderBy: [TeamOrderByInput!], skip: Float, take: Float, where: TeamWhereInput): [Team!]!
   user(where: UserWhereUniqueInput!): User
+  userInfo: UserInfo!
   users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
   workspace(where: WorkspaceWhereUniqueInput!): Workspace
   workspaces(orderBy: [WorkspaceOrderByInput!], skip: Float, take: Float, where: WorkspaceWhereInput): [Workspace!]!
@@ -343,6 +344,13 @@ input UserCreateNestedManyWithoutTeamsInput {
 
 input UserCreateNestedManyWithoutWorkspacesInput {
   connect: [UserWhereUniqueInput!]
+}
+
+type UserInfo {
+  accessToken: String
+  id: String!
+  roles: [String!]!
+  username: String!
 }
 
 input UserListRelationFilter {

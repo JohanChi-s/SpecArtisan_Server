@@ -42,8 +42,8 @@ services:
       - ./otel-config.yml:/etc/otel-config.yml
     command:
       - --config=/etc/otel-config.yml
-    depends_on:
-      - jaeger
+    # depends_on:
+    #   - jaeger
   keycloak:
     image: quay.io/keycloak/keycloak
     command: -v start-dev --import-realm

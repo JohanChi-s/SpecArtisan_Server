@@ -16,10 +16,10 @@ processors:
 exporters:
   logging:
     loglevel: info
-  jaeger:
-    endpoint: jaeger:14250
-    tls:
-      insecure: true
+  # jaeger:
+  #   endpoint: jaeger:14250
+  #   tls:
+  #     insecure: true
 
 extensions:
   health_check:
@@ -33,4 +33,5 @@ service:
     traces:
       receivers: [otlp]
       processors: [batch, resource]
-      exporters: [logging, jaeger]
+      # exporters: [logging, jaeger]
+      exporters: [logging]
