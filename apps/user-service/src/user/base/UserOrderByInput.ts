@@ -160,8 +160,6 @@ class UserOrderByInput {
   @Field(() => SortOrder, {
     nullable: true,
   })
-  profileId?: SortOrder;
-
   @ApiProperty({
     required: false,
     enum: ["asc", "desc"],

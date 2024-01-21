@@ -1,0 +1,506 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+input BooleanFilter {
+  equals: Boolean
+  not: Boolean
+}
+
+input BooleanNullableFilter {
+  equals: Boolean
+  not: Boolean
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+input DateTimeFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: DateTime
+  notIn: [DateTime!]
+}
+
+input DateTimeNullableFilter {
+  equals: DateTime
+  gt: DateTime
+  gte: DateTime
+  in: [DateTime!]
+  lt: DateTime
+  lte: DateTime
+  not: DateTime
+  notIn: [DateTime!]
+}
+
+input IntNullableFilter {
+  equals: Int
+  gt: Int
+  gte: Int
+  in: [Int!]
+  lt: Int
+  lte: Int
+  not: Int
+  notIn: [Int!]
+}
+
+"""
+The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSON
+
+"""
+The `JSONObject` scalar type represents JSON objects as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+"""
+scalar JSONObject
+
+input JsonFilter {
+  equals: JSONObject
+  not: JSONObject
+}
+
+type MetaQueryPayload {
+  count: Float!
+}
+
+type Mutation {
+  createProfile(data: ProfileCreateInput!): Profile!
+  createTeam(data: TeamCreateInput!): Team!
+  createUser(data: UserCreateInput!): User!
+  createWorkspace(data: WorkspaceCreateInput!): Workspace!
+  deleteProfile(where: ProfileWhereUniqueInput!): Profile!
+  deleteTeam(where: TeamWhereUniqueInput!): Team!
+  deleteUser(where: UserWhereUniqueInput!): User!
+  deleteWorkspace(where: WorkspaceWhereUniqueInput!): Workspace!
+  updateProfile(data: ProfileUpdateInput!, where: ProfileWhereUniqueInput!): Profile!
+  updateTeam(data: TeamUpdateInput!, where: TeamWhereUniqueInput!): Team!
+  updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User!
+  updateWorkspace(data: WorkspaceUpdateInput!, where: WorkspaceWhereUniqueInput!): Workspace!
+}
+
+type Profile {
+  address: String
+  age: Float
+  avatarUrl: String
+  createdAt: DateTime!
+  fullName: String
+  id: String!
+  updatedAt: DateTime!
+  user: User
+}
+
+input ProfileCreateInput {
+  address: String
+  age: Float
+  avatarUrl: String
+  fullName: String
+  user: UserWhereUniqueInput!
+}
+
+input ProfileOrderByInput {
+  address: SortOrder
+  age: SortOrder
+  avatarUrl: SortOrder
+  createdAt: SortOrder
+  fullName: SortOrder
+  id: SortOrder
+  updatedAt: SortOrder
+  userId: SortOrder
+}
+
+input ProfileUpdateInput {
+  address: String
+  age: Float
+  avatarUrl: String
+  fullName: String
+  user: UserWhereUniqueInput
+}
+
+input ProfileWhereInput {
+  address: StringNullableFilter
+  age: IntNullableFilter
+  avatarUrl: StringNullableFilter
+  createdAt: DateTimeFilter
+  fullName: StringNullableFilter
+  id: StringFilter
+  updatedAt: DateTimeFilter
+  user: UserWhereUniqueInput
+}
+
+input ProfileWhereUniqueInput {
+  id: String!
+}
+
+type Query {
+  _profilesMeta(where: ProfileWhereInput): MetaQueryPayload!
+  _teamsMeta(where: TeamWhereInput): MetaQueryPayload!
+  _usersMeta(where: UserWhereInput): MetaQueryPayload!
+  _workspacesMeta(where: WorkspaceWhereInput): MetaQueryPayload!
+  profile(where: ProfileWhereUniqueInput!): Profile
+  profiles(orderBy: [ProfileOrderByInput!], skip: Float, take: Float, where: ProfileWhereInput): [Profile!]!
+  team(where: TeamWhereUniqueInput!): Team
+  teams(orderBy: [TeamOrderByInput!], skip: Float, take: Float, where: TeamWhereInput): [Team!]!
+  user(where: UserWhereUniqueInput!): User
+  users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
+  workspace(where: WorkspaceWhereUniqueInput!): Workspace
+  workspaces(orderBy: [WorkspaceOrderByInput!], skip: Float, take: Float, where: WorkspaceWhereInput): [Workspace!]!
+}
+
+enum QueryMode {
+  Default
+  Insensitive
+}
+
+enum SortOrder {
+  Asc
+  Desc
+}
+
+input StringFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+input StringNullableFilter {
+  contains: String
+  endsWith: String
+  equals: String
+  gt: String
+  gte: String
+  in: [String!]
+  lt: String
+  lte: String
+  mode: QueryMode
+  not: String
+  notIn: [String!]
+  startsWith: String
+}
+
+type Team {
+  avatarUrl: String
+  canComment: Boolean
+  canShare: Boolean
+  createdAt: DateTime!
+  defaultUserRole: String
+  id: String!
+  inviteRequired: Boolean
+  name: String
+  subDomain: String
+  theme: String
+  updatedAt: DateTime!
+  url: String
+  users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
+  workspaces(orderBy: [WorkspaceOrderByInput!], skip: Float, take: Float, where: WorkspaceWhereInput): [Workspace!]!
+}
+
+input TeamCreateInput {
+  avatarUrl: String
+  canComment: Boolean
+  canShare: Boolean
+  defaultUserRole: String
+  inviteRequired: Boolean
+  name: String
+  subDomain: String
+  theme: String
+  url: String
+  users: UserCreateNestedManyWithoutTeamsInput
+  workspaces: WorkspaceCreateNestedManyWithoutTeamsInput
+}
+
+input TeamCreateNestedManyWithoutUsersInput {
+  connect: [TeamWhereUniqueInput!]
+}
+
+input TeamCreateNestedManyWithoutWorkspacesInput {
+  connect: [TeamWhereUniqueInput!]
+}
+
+input TeamListRelationFilter {
+  every: TeamWhereInput
+  none: TeamWhereInput
+  some: TeamWhereInput
+}
+
+input TeamOrderByInput {
+  avatarUrl: SortOrder
+  canComment: SortOrder
+  canShare: SortOrder
+  createdAt: SortOrder
+  defaultUserRole: SortOrder
+  id: SortOrder
+  inviteRequired: SortOrder
+  name: SortOrder
+  subDomain: SortOrder
+  theme: SortOrder
+  updatedAt: SortOrder
+  url: SortOrder
+}
+
+input TeamUpdateInput {
+  avatarUrl: String
+  canComment: Boolean
+  canShare: Boolean
+  defaultUserRole: String
+  inviteRequired: Boolean
+  name: String
+  subDomain: String
+  theme: String
+  url: String
+  users: UserUpdateManyWithoutTeamsInput
+  workspaces: WorkspaceUpdateManyWithoutTeamsInput
+}
+
+input TeamUpdateManyWithoutUsersInput {
+  connect: [TeamWhereUniqueInput!]
+  disconnect: [TeamWhereUniqueInput!]
+  set: [TeamWhereUniqueInput!]
+}
+
+input TeamUpdateManyWithoutWorkspacesInput {
+  connect: [TeamWhereUniqueInput!]
+  disconnect: [TeamWhereUniqueInput!]
+  set: [TeamWhereUniqueInput!]
+}
+
+input TeamWhereInput {
+  avatarUrl: StringNullableFilter
+  canComment: BooleanNullableFilter
+  canShare: BooleanNullableFilter
+  createdAt: DateTimeFilter
+  defaultUserRole: StringNullableFilter
+  id: StringFilter
+  inviteRequired: BooleanNullableFilter
+  name: StringNullableFilter
+  subDomain: StringNullableFilter
+  theme: StringNullableFilter
+  updatedAt: DateTimeFilter
+  url: StringNullableFilter
+  users: UserListRelationFilter
+  workspaces: WorkspaceListRelationFilter
+}
+
+input TeamWhereUniqueInput {
+  id: String!
+}
+
+type User {
+  createdAt: DateTime!
+  email: String!
+  firstName: String
+  id: String!
+  isActive: Boolean
+  isAdmin: Boolean!
+  isViewer: Boolean
+  language: String
+  lastActiveAt: DateTime
+  lastName: String
+  password: String!
+  profile: Profile
+  profileId: String!
+  roles: JSON!
+  teams(orderBy: [TeamOrderByInput!], skip: Float, take: Float, where: TeamWhereInput): [Team!]!
+  updatedAt: DateTime!
+  username: String!
+  workspaces(orderBy: [WorkspaceOrderByInput!], skip: Float, take: Float, where: WorkspaceWhereInput): [Workspace!]!
+}
+
+input UserCreateInput {
+  email: String!
+  firstName: String
+  isActive: Boolean
+  isAdmin: Boolean!
+  isViewer: Boolean
+  language: String
+  lastName: String
+  password: String!
+  profile: ProfileWhereUniqueInput
+  profileId: String!
+  roles: JSON!
+  teams: TeamCreateNestedManyWithoutUsersInput
+  username: String!
+  workspaces: WorkspaceCreateNestedManyWithoutUsersInput
+}
+
+input UserCreateNestedManyWithoutTeamsInput {
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserCreateNestedManyWithoutWorkspacesInput {
+  connect: [UserWhereUniqueInput!]
+}
+
+input UserListRelationFilter {
+  every: UserWhereInput
+  none: UserWhereInput
+  some: UserWhereInput
+}
+
+input UserOrderByInput {
+  createdAt: SortOrder
+  email: SortOrder
+  firstName: SortOrder
+  id: SortOrder
+  isActive: SortOrder
+  isAdmin: SortOrder
+  isViewer: SortOrder
+  language: SortOrder
+  lastActiveAt: SortOrder
+  lastName: SortOrder
+  password: SortOrder
+  profileId: SortOrder
+  roles: SortOrder
+  updatedAt: SortOrder
+  username: SortOrder
+}
+
+input UserUpdateInput {
+  email: String
+  firstName: String
+  isActive: Boolean
+  isAdmin: Boolean
+  isViewer: Boolean
+  language: String
+  lastName: String
+  password: String
+  profile: ProfileWhereUniqueInput
+  profileId: String
+  roles: JSON
+  teams: TeamUpdateManyWithoutUsersInput
+  username: String
+  workspaces: WorkspaceUpdateManyWithoutUsersInput
+}
+
+input UserUpdateManyWithoutTeamsInput {
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+}
+
+input UserUpdateManyWithoutWorkspacesInput {
+  connect: [UserWhereUniqueInput!]
+  disconnect: [UserWhereUniqueInput!]
+  set: [UserWhereUniqueInput!]
+}
+
+input UserWhereInput {
+  createdAt: DateTimeFilter
+  email: StringFilter
+  firstName: StringNullableFilter
+  id: StringFilter
+  isActive: BooleanNullableFilter
+  isAdmin: BooleanFilter
+  isViewer: BooleanNullableFilter
+  language: StringNullableFilter
+  lastActiveAt: DateTimeNullableFilter
+  lastName: StringNullableFilter
+  password: StringFilter
+  profile: ProfileWhereUniqueInput
+  profileId: StringFilter
+  roles: JsonFilter
+  teams: TeamListRelationFilter
+  updatedAt: DateTimeFilter
+  username: StringFilter
+  workspaces: WorkspaceListRelationFilter
+}
+
+input UserWhereUniqueInput {
+  id: String!
+}
+
+type Workspace {
+  createdAt: DateTime!
+  domain: String
+  id: String!
+  isPublic: Boolean!
+  name: String!
+  teams(orderBy: [TeamOrderByInput!], skip: Float, take: Float, where: TeamWhereInput): [Team!]!
+  updatedAt: DateTime!
+  url: String
+  user(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
+}
+
+input WorkspaceCreateInput {
+  domain: String
+  isPublic: Boolean!
+  name: String!
+  teams: TeamCreateNestedManyWithoutWorkspacesInput
+  url: String
+  user: UserCreateNestedManyWithoutWorkspacesInput
+}
+
+input WorkspaceCreateNestedManyWithoutTeamsInput {
+  connect: [WorkspaceWhereUniqueInput!]
+}
+
+input WorkspaceCreateNestedManyWithoutUsersInput {
+  connect: [WorkspaceWhereUniqueInput!]
+}
+
+input WorkspaceListRelationFilter {
+  every: WorkspaceWhereInput
+  none: WorkspaceWhereInput
+  some: WorkspaceWhereInput
+}
+
+input WorkspaceOrderByInput {
+  createdAt: SortOrder
+  domain: SortOrder
+  id: SortOrder
+  isPublic: SortOrder
+  name: SortOrder
+  updatedAt: SortOrder
+  url: SortOrder
+}
+
+input WorkspaceUpdateInput {
+  domain: String
+  isPublic: Boolean
+  name: String
+  teams: TeamUpdateManyWithoutWorkspacesInput
+  url: String
+  user: UserUpdateManyWithoutWorkspacesInput
+}
+
+input WorkspaceUpdateManyWithoutTeamsInput {
+  connect: [WorkspaceWhereUniqueInput!]
+  disconnect: [WorkspaceWhereUniqueInput!]
+  set: [WorkspaceWhereUniqueInput!]
+}
+
+input WorkspaceUpdateManyWithoutUsersInput {
+  connect: [WorkspaceWhereUniqueInput!]
+  disconnect: [WorkspaceWhereUniqueInput!]
+  set: [WorkspaceWhereUniqueInput!]
+}
+
+input WorkspaceWhereInput {
+  createdAt: DateTimeFilter
+  domain: StringNullableFilter
+  id: StringFilter
+  isPublic: BooleanFilter
+  name: StringFilter
+  teams: TeamListRelationFilter
+  updatedAt: DateTimeFilter
+  url: StringNullableFilter
+  user: UserListRelationFilter
+}
+
+input WorkspaceWhereUniqueInput {
+  id: String!
+}

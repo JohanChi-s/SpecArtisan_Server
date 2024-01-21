@@ -25,7 +25,7 @@ async function seed() {
       foo: "bar",
     },
 
-    username: "",
+    username: "admin",
   };
   await client.user.create({
     data,
