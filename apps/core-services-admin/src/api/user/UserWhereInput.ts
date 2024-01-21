@@ -5,7 +5,6 @@ import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
 import { BooleanFilter } from "../../util/BooleanFilter";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
 import { ProfileWhereUniqueInput } from "../profile/ProfileWhereUniqueInput";
-import { JsonFilter } from "../../util/JsonFilter";
 import { TeamListRelationFilter } from "../team/TeamListRelationFilter";
 import { WorkspaceListRelationFilter } from "../workspace/WorkspaceListRelationFilter";
 
@@ -20,10 +19,7 @@ export type UserWhereInput = {
   language?: StringNullableFilter;
   lastActiveAt?: DateTimeNullableFilter;
   lastName?: StringNullableFilter;
-  password?: StringFilter;
   profile?: ProfileWhereUniqueInput;
-  profileId?: StringFilter;
-  roles?: JsonFilter;
   teams?: TeamListRelationFilter;
   updatedAt?: DateTimeFilter;
   username?: StringFilter;

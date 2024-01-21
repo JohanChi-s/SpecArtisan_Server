@@ -61,7 +61,6 @@ model User {
   lastName     String?
   password     String
   profile      Profile?
-  profileId    String      @unique
   roles        Json
   teams        Team[]
   updatedAt    DateTime    @updatedAt

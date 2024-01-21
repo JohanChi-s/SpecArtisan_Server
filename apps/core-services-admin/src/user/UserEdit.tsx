@@ -6,15 +6,17 @@ import {
   EditProps,
   TextInput,
   BooleanInput,
+  PasswordInput,
   ReferenceInput,
   SelectInput,
-  ReferenceArrayInput,
   SelectArrayInput,
+  ReferenceArrayInput,
 } from "react-admin";
 
 import { ProfileTitle } from "../profile/ProfileTitle";
 import { TeamTitle } from "../team/TeamTitle";
 import { WorkspaceTitle } from "../workspace/WorkspaceTitle";
+import { ROLES_OPTIONS } from "../user/RolesOptions";
 
 export const UserEdit = (props: EditProps): React.ReactElement => {
   return (
@@ -27,12 +29,16 @@ export const UserEdit = (props: EditProps): React.ReactElement => {
         <BooleanInput label="Is Viewer" source="isViewer" />
         <TextInput label="Language" source="language" />
         <TextInput label="Last Name" source="lastName" />
-        <TextInput label="Password" source="password" />
+        <PasswordInput label="Password" source="password" />
         <ReferenceInput source="profile.id" reference="Profile" label="Profile">
           <SelectInput optionText={ProfileTitle} />
         </ReferenceInput>
-        <TextInput label="Profile Id" source="profileId" />
-        <div />
+        <SelectArrayInput
+          source="roles"
+          choices={ROLES_OPTIONS}
+          optionText="label"
+          optionValue="value"
+        />
         <ReferenceArrayInput
           source="teams"
           reference="Team"

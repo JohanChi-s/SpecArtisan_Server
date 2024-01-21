@@ -29,7 +29,6 @@ const CREATE_INPUT = {
   lastActiveAt: new Date(),
   lastName: "exampleLastName",
   password: "examplePassword",
-  profileId: "exampleProfileId",
   updatedAt: new Date(),
   username: "exampleUsername",
 };
@@ -45,7 +44,6 @@ const CREATE_RESULT = {
   lastActiveAt: new Date(),
   lastName: "exampleLastName",
   password: "examplePassword",
-  profileId: "exampleProfileId",
   updatedAt: new Date(),
   username: "exampleUsername",
 };
@@ -62,7 +60,6 @@ const FIND_MANY_RESULT = [
     lastActiveAt: new Date(),
     lastName: "exampleLastName",
     password: "examplePassword",
-    profileId: "exampleProfileId",
     updatedAt: new Date(),
     username: "exampleUsername",
   },
@@ -79,7 +76,6 @@ const FIND_ONE_RESULT = {
   lastActiveAt: new Date(),
   lastName: "exampleLastName",
   password: "examplePassword",
-  profileId: "exampleProfileId",
   updatedAt: new Date(),
   username: "exampleUsername",
 };

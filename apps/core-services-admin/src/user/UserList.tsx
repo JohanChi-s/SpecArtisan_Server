@@ -33,11 +33,9 @@ export const UserList = (props: ListProps): React.ReactElement => {
         <TextField label="Language" source="language" />
         <DateField source="lastActiveAt" label="Last Active At" />
         <TextField label="Last Name" source="lastName" />
-        <TextField label="Password" source="password" />
         <ReferenceField label="Profile" source="profile.id" reference="Profile">
           <TextField source={PROFILE_TITLE_FIELD} />
         </ReferenceField>
-        <TextField label="Profile Id" source="profileId" />
         <TextField label="Roles" source="roles" />
         <DateField source="updatedAt" label="Updated At" />
         <TextField label="Username" source="username" />
