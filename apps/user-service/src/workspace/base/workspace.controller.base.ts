@@ -351,7 +351,6 @@ export class WorkspaceControllerBase {
           },
         },
 
-        profileId: true,
         roles: true,
         updatedAt: true,
         username: true,

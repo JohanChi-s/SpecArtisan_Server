@@ -270,7 +270,6 @@ export class TeamControllerBase {
           },
         },
 
-        profileId: true,
         roles: true,
         updatedAt: true,
         username: true,

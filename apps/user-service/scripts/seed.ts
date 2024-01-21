@@ -18,12 +18,7 @@ async function seed() {
   const data = {
     email: "example@example.com",
     isAdmin: false,
-    profileId: "",
-
-    roles: {
-      foo: "bar",
-    },
-
+    roles: ["user"],
     username: "admin",
   };
   await client.user.create({

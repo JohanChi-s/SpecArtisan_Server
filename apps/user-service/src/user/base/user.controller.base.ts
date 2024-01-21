@@ -83,7 +83,6 @@ export class UserControllerBase {
           },
         },
 
-        profileId: true,
         roles: true,
         updatedAt: true,
         username: true,
@@ -125,7 +124,6 @@ export class UserControllerBase {
           },
         },
 
-        profileId: true,
         roles: true,
         updatedAt: true,
         username: true,
@@ -168,7 +166,6 @@ export class UserControllerBase {
           },
         },
 
-        profileId: true,
         roles: true,
         updatedAt: true,
         username: true,
@@ -231,7 +228,6 @@ export class UserControllerBase {
             },
           },
 
-          profileId: true,
           roles: true,
           updatedAt: true,
           username: true,
@@ -282,7 +278,6 @@ export class UserControllerBase {
             },
           },
 
-          profileId: true,
           roles: true,
           updatedAt: true,
           username: true,

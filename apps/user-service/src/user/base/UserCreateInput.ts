@@ -120,14 +120,6 @@ class UserCreateInput {
 
   @ApiProperty({
     required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
-  profileId!: string;
-
-  @ApiProperty({
-    required: true,
   })
   @IsJSONValue()
   @Field(() => GraphQLJSON)
