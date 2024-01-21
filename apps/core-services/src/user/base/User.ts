@@ -127,14 +127,6 @@ class User {
   lastName!: string | null;
 
   @ApiProperty({
-    required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
-  password!: string;
-
-  @ApiProperty({
     required: false,
     type: () => Profile,
   })
@@ -142,14 +134,6 @@ class User {
   @Type(() => Profile)
   @IsOptional()
   profile?: Profile | null;
-
-  @ApiProperty({
-    required: true,
-    type: String,
-  })
-  @IsString()
-  @Field(() => String)
-  profileId!: string;
 
   @ApiProperty({
     required: true,

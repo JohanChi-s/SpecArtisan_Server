@@ -263,7 +263,6 @@ export class TeamControllerBase {
         language: true,
         lastActiveAt: true,
         lastName: true,
-        password: true,
 
         profile: {
           select: {
@@ -271,7 +270,6 @@ export class TeamControllerBase {
           },
         },
 
-        profileId: true,
         roles: true,
         updatedAt: true,
         username: true,

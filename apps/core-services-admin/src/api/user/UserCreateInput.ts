@@ -13,7 +13,6 @@ export type UserCreateInput = {
   lastName?: string | null;
   password: string;
   profile?: ProfileWhereUniqueInput | null;
-  profileId: string;
   roles: InputJsonValue;
   teams?: TeamCreateNestedManyWithoutUsersInput;
   username: string;

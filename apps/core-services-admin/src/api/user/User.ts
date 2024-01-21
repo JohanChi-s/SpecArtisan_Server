@@ -14,9 +14,7 @@ export type User = {
   language: string | null;
   lastActiveAt: Date | null;
   lastName: string | null;
-  password: string;
   profile?: Profile | null;
-  profileId: string;
   roles: JsonValue;
   teams?: Array<Team>;
   updatedAt: Date;

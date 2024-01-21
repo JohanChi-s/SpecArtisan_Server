@@ -13,7 +13,6 @@ export type UserUpdateInput = {
   lastName?: string | null;
   password?: string;
   profile?: ProfileWhereUniqueInput | null;
-  profileId?: string;
   roles?: InputJsonValue;
   teams?: TeamUpdateManyWithoutUsersInput;
   username?: string;
