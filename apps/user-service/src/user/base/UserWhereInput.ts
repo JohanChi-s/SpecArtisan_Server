@@ -20,7 +20,6 @@ import { BooleanNullableFilter } from "../../util/BooleanNullableFilter";
 import { BooleanFilter } from "../../util/BooleanFilter";
 import { DateTimeNullableFilter } from "../../util/DateTimeNullableFilter";
 import { ProfileWhereUniqueInput } from "../../profile/base/ProfileWhereUniqueInput";
-import { JsonFilter } from "../../util/JsonFilter";
 import { TeamListRelationFilter } from "../../team/base/TeamListRelationFilter";
 import { WorkspaceListRelationFilter } from "../../workspace/base/WorkspaceListRelationFilter";
 
@@ -147,28 +146,6 @@ class UserWhereInput {
     nullable: true,
   })
   profile?: ProfileWhereUniqueInput;
-
-  @ApiProperty({
-    required: false,
-    type: StringFilter,
-  })
-  @Type(() => StringFilter)
-  @IsOptional()
-  @Field(() => StringFilter, {
-    nullable: true,
-  })
-  profileId?: StringFilter;
-
-  @ApiProperty({
-    required: false,
-    type: JsonFilter,
-  })
-  @Type(() => JsonFilter)
-  @IsOptional()
-  @Field(() => JsonFilter, {
-    nullable: true,
-  })
-  roles?: JsonFilter;
 
   @ApiProperty({
     required: false,
