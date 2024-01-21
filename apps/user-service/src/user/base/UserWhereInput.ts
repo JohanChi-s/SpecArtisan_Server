@@ -138,17 +138,6 @@ class UserWhereInput {
 
   @ApiProperty({
     required: false,
-    type: StringFilter,
-  })
-  @Type(() => StringFilter)
-  @IsOptional()
-  @Field(() => StringFilter, {
-    nullable: true,
-  })
-  password?: StringFilter;
-
-  @ApiProperty({
-    required: false,
     type: () => ProfileWhereUniqueInput,
   })
   @ValidateNested()

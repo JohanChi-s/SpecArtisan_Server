@@ -344,7 +344,6 @@ export class WorkspaceControllerBase {
         language: true,
         lastActiveAt: true,
         lastName: true,
-        password: true,
 
         profile: {
           select: {
