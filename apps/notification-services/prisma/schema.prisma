@@ -6,3 +6,19 @@ datasource db {
 generator client {
   provider = "prisma-client-js"
 }
+
+model Notification {
+  content     EnumNotificationContent?
+  createdAt   DateTime                 @default(now())
+  documentId  String?
+  id          String                   @id @default(cuid())
+  reciever    String?
+  sender      String?
+  updatedAt   DateTime                 @updatedAt
+  workspaceId String?
+}
+
+enum EnumNotificationContent {
+  NewUser
+  VerifyEmail
+}
