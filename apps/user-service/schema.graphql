@@ -147,6 +147,7 @@ type Query {
   team(where: TeamWhereUniqueInput!): Team
   teams(orderBy: [TeamOrderByInput!], skip: Float, take: Float, where: TeamWhereInput): [Team!]!
   user(where: UserWhereUniqueInput!): User
+  userInfo: UserInfo!
   users(orderBy: [UserOrderByInput!], skip: Float, take: Float, where: UserWhereInput): [User!]!
   workspace(where: WorkspaceWhereUniqueInput!): Workspace
   workspaces(orderBy: [WorkspaceOrderByInput!], skip: Float, take: Float, where: WorkspaceWhereInput): [Workspace!]!
@@ -312,7 +313,6 @@ type User {
   lastName: String
   password: String!
   profile: Profile
-  profileId: String!
   roles: JSON!
   teams(orderBy: [TeamOrderByInput!], skip: Float, take: Float, where: TeamWhereInput): [Team!]!
   updatedAt: DateTime!
@@ -330,7 +330,6 @@ input UserCreateInput {
   lastName: String
   password: String!
   profile: ProfileWhereUniqueInput
-  profileId: String!
   roles: JSON!
   teams: TeamCreateNestedManyWithoutUsersInput
   username: String!
@@ -343,6 +342,13 @@ input UserCreateNestedManyWithoutTeamsInput {
 
 input UserCreateNestedManyWithoutWorkspacesInput {
   connect: [UserWhereUniqueInput!]
+}
+
+type UserInfo {
+  accessToken: String
+  id: String!
+  roles: [String!]!
+  username: String!
 }
 
 input UserListRelationFilter {
@@ -363,7 +369,6 @@ input UserOrderByInput {
   lastActiveAt: SortOrder
   lastName: SortOrder
   password: SortOrder
-  profileId: SortOrder
   roles: SortOrder
   updatedAt: SortOrder
   username: SortOrder
@@ -379,7 +384,6 @@ input UserUpdateInput {
   lastName: String
   password: String
   profile: ProfileWhereUniqueInput
-  profileId: String
   roles: JSON
   teams: TeamUpdateManyWithoutUsersInput
   username: String
@@ -411,7 +415,6 @@ input UserWhereInput {
   lastName: StringNullableFilter
   password: StringFilter
   profile: ProfileWhereUniqueInput
-  profileId: StringFilter
   roles: JsonFilter
   teams: TeamListRelationFilter
   updatedAt: DateTimeFilter

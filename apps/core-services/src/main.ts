@@ -99,7 +99,7 @@ async function main() {
   await app.init();
 
   if (APP_MODE === "both") {
-    Logger.log(`🚀 Running both http and https server`, "NestApplication");
+    Logger.log(`🚀 Running both http and https server at http://localhost:3000`, "NestApplication");
     // create both http and https server
     http.createServer(server).listen(PORT);
     https.createServer(httpsOptions, server).listen(HTTPS_PORT);

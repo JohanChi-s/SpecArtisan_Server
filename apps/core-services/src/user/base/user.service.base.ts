@@ -26,7 +26,6 @@ export class UserServiceBase {
   constructor(
     protected readonly prisma: PrismaService,
     protected readonly passwordService: PasswordService,
-    protected readonly passwordService: PasswordService
   ) {}
 
   async count<T extends Prisma.UserCountArgs>(

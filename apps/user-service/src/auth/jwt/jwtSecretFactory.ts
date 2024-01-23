@@ -3,7 +3,7 @@ import { SecretsManagerService } from "../../providers/secrets/secretsManager.se
 import { EnumSecretsNameKey } from "../../providers/secrets/secretsNameKey.enum";
 
 export const jwtSecretFactory = {
-  provide: JWT_SECRET_KEY_PROVIDER_NAME,
+  provide: JWT_SECRET_KEY_PROVIDER_NAME,  
   useFactory: async (
     secretsService: SecretsManagerService
   ): Promise<string> => {

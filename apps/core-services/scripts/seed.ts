@@ -19,6 +19,7 @@ async function seed() {
     email: "example@example.com",
     isAdmin: false,
     roles: ["user"],
+    password: "admin",
     username: "admin",
   };
   await client.user.create({

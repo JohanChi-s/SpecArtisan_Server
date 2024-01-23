@@ -90,26 +90,26 @@ import { AuthModule } from "./auth/auth.module";
 
       inject: [ConfigService],
     }),
-    // OpenTelemetryModule.forRoot({
-    //   serviceName: "User Service",
-    //   spanProcessor: new BatchSpanProcessor(new OTLPTraceExporter()),
-    //   instrumentations: [
-    //     new HttpInstrumentation({
-    //       requestHook: (span, request) => {
-    //         if (request.method)
-    //           span.setAttribute("http.method", request.method);
-    //       },
-    //     }),
-    //   ],
+    OpenTelemetryModule.forRoot({
+      // serviceName: "User Service",
+      // spanProcessor: new BatchSpanProcessor(new OTLPTraceExporter()),
+      // instrumentations: [
+      //   new HttpInstrumentation({
+      //     requestHook: (span, request) => {
+      //       if (request.method)
+      //         span.setAttribute("http.method", request.method);
+      //     },
+      //   }),
+      // ],
 
-    //   traceAutoInjectors: [
-    //     ControllerInjector,
-    //     EventEmitterInjector,
-    //     GraphQLResolverInjector,
-    //     GuardInjector,
-    //     PipeInjector,
-    //   ],
-    // }),
+      traceAutoInjectors: [
+        ControllerInjector,
+        EventEmitterInjector,
+        GraphQLResolverInjector,
+        GuardInjector,
+        PipeInjector,
+      ],
+    }),
   ],
   providers: [],
 })
