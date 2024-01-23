@@ -2,6 +2,7 @@ import { RabbitMQModule } from "./rabbitmq/rabbitmq.module";
 import { Module } from "@nestjs/common";
 import { CacheModule } from "@nestjs/cache-manager";
 import { redisStore } from "cache-manager-ioredis-yet";
+import { NotificationModule } from "./notification/notification.module";
 import { HealthModule } from "./health/health.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { SecretsManagerModule } from "./providers/secrets/secretsManager.module";
@@ -18,6 +19,7 @@ import { LoggerModule } from "./logger/logger.module";
   imports: [
     LoggerModule,
     RabbitMQModule,
+    NotificationModule,
     HealthModule,
     PrismaModule,
     SecretsManagerModule,
