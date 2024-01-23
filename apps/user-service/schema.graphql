@@ -313,7 +313,6 @@ type User {
   lastName: String
   password: String!
   profile: Profile
-  profileId: String!
   roles: JSON!
   teams(orderBy: [TeamOrderByInput!], skip: Float, take: Float, where: TeamWhereInput): [Team!]!
   updatedAt: DateTime!
@@ -331,7 +330,6 @@ input UserCreateInput {
   lastName: String
   password: String!
   profile: ProfileWhereUniqueInput
-  profileId: String!
   roles: JSON!
   teams: TeamCreateNestedManyWithoutUsersInput
   username: String!
@@ -371,7 +369,6 @@ input UserOrderByInput {
   lastActiveAt: SortOrder
   lastName: SortOrder
   password: SortOrder
-  profileId: SortOrder
   roles: SortOrder
   updatedAt: SortOrder
   username: SortOrder
@@ -387,7 +384,6 @@ input UserUpdateInput {
   lastName: String
   password: String
   profile: ProfileWhereUniqueInput
-  profileId: String
   roles: JSON
   teams: TeamUpdateManyWithoutUsersInput
   username: String
@@ -419,7 +415,6 @@ input UserWhereInput {
   lastName: StringNullableFilter
   password: StringFilter
   profile: ProfileWhereUniqueInput
-  profileId: StringFilter
   roles: JsonFilter
   teams: TeamListRelationFilter
   updatedAt: DateTimeFilter

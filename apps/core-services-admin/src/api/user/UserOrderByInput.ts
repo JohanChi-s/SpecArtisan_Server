@@ -12,7 +12,6 @@ export type UserOrderByInput = {
   lastActiveAt?: SortOrder;
   lastName?: SortOrder;
   password?: SortOrder;
-  profileId?: SortOrder;
   roles?: SortOrder;
   updatedAt?: SortOrder;
   username?: SortOrder;

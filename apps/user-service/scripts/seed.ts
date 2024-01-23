@@ -20,9 +20,10 @@ async function seed() {
     isAdmin: false,
     roles: ["user"],
     username: "admin",
+    password: "admin"
   };
   await client.user.create({
-    data,
+    data: data,
   });
   void client.$disconnect();
 

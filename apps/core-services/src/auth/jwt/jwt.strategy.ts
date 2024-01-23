@@ -43,6 +43,7 @@ export class JwtStrategy extends JwtStrategyBase implements IAuthStrategy {
       isAdmin: false,
       roles: ["user"],
       username: "admin",
+      password: "admin",
     };
 
     const newUser = await this.userService.createUser({
