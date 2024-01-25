@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { InputType, Field } from "@nestjs/graphql";
-import { IsString } from "class-validator";
+import { IsEmail, IsString } from "class-validator";
 
 @InputType()
 export class Credentials {
@@ -19,3 +19,29 @@ export class Credentials {
   @Field(() => String, { nullable: false })
   password!: string;
 }
+@InputType()
+export class CreateUserDto {
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String, { nullable: false })
+  username!: string;
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsString()
+  @Field(() => String, { nullable: false })
+  password!: string;
+  @ApiProperty({
+    required: true,
+    type: String,
+  })
+  @IsEmail()
+  @Field(() => String, { nullable: false })
+  email!: string;
+}
+
+
