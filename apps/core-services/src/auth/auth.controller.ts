@@ -12,7 +12,7 @@ export class AuthController {
   async login(@Body() body: Credentials): Promise<UserInfo> {
     return this.authService.login(body);
   }
-  @Post("register")
+@Post("register")
   async register(@Body() body: CreateUserDto): Promise<UserInfo> {
     return this.authService.register(body);
   }

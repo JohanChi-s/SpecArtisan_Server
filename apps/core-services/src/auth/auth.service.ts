@@ -26,7 +26,6 @@ export class AuthService {
     });
     if (user && (await this.passwordService.compare(password, user.password))) {
       const { id, roles } = user;
-      console.log("🚀 ~ AuthService ~ user:", user)
       const roleList = roles as string[];
       return { id, username, roles: roleList };
     }
@@ -34,18 +33,17 @@ export class AuthService {
   }
   async login(credentials: Credentials): Promise<UserInfo> {
     const { username, password } = credentials;
-    console.log("🚀 ~ AuthService ~ login ~ credentials:", credentials)
     const user = await this.validateUser(
       credentials.username,
       credentials.password
     );
     if (!user) {
-      throw new UnauthorizedException('The passed credentials are incorrect');
+      throw new UnauthorizedException("The passed credentials are incorrect");
     }
     const accessToken = await this.tokenService.createToken({
       id: user.id,
       username,
-      password
+      password,
     });
     return {
       accessToken,
