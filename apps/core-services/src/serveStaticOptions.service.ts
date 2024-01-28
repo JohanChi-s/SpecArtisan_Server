@@ -26,7 +26,9 @@ export class ServeStaticOptionsService
     const serveStaticRootPath = this.configService.get(
       SERVE_STATIC_ROOT_PATH_VAR
     );
+    console.log("🚀 ~ createLoggerOptions ~ serveStaticRootPath:", serveStaticRootPath)
     if (serveStaticRootPath) {
+      console.log("🚀 ~ createLoggerOptions ~ serveStaticRootPath:", serveStaticRootPath)
       const resolvedPath = path.resolve(serveStaticRootPath);
       this.logger.log(`Serving static files from ${resolvedPath}`);
       return [

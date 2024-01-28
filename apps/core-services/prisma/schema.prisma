@@ -53,15 +53,15 @@ model User {
   email        String      @unique
   firstName    String?
   id           String      @id @default(cuid())
-  isActive     Boolean?
-  isAdmin      Boolean
-  isViewer     Boolean?
-  language     String?
+  isActive     Boolean?    @default(false)
+  isAdmin      Boolean     @default(false)
+  isViewer     Boolean?    @default(false)
+  language     String?      
   lastActiveAt DateTime?   @updatedAt
   lastName     String?
-  password     String
+  password     String     
   profile      Profile?
-  roles        Json
+  roles        Json       
   teams        Team[]
   updatedAt    DateTime    @updatedAt
   username     String      @unique

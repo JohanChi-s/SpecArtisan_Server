@@ -38,7 +38,7 @@ variables:
     REDIS_PASSWORD: ""
     AWS_REGION: "us-east-1"
     KEYCLOAK_URL: "http://localhost:8080"
-    KEYCLOAK_REALM: "amplication-sample-realm"
+    KEYCLOAK_REALM: "master"
     KEYCLOAK_CLIENT_ID: "amplication-server"
     KEYCLOAK_ADMIN_USERNAME: "admin"
     KEYCLOAK_ADMIN_PASSWORD: "password"

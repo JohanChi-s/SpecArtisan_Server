@@ -82,7 +82,7 @@ import { LoggerModule } from "./logger/logger.module";
     }),
     OpenTelemetryModule.forRoot({
       serviceName: "Core Services",
-      spanProcessor: new BatchSpanProcessor(new OTLPTraceExporter()),
+      // spanProcessor: new BatchSpanProcessor(new OTLPTraceExporter()),
       instrumentations: [
         new HttpInstrumentation({
           requestHook: (span, request) => {

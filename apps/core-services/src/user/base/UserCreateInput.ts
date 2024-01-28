@@ -58,12 +58,13 @@ class UserCreateInput {
   isActive?: boolean | null;
 
   @ApiProperty({
-    required: true,
+    required: false,
     type: Boolean,
   })
   @IsBoolean()
+  @IsOptional()
   @Field(() => Boolean)
-  isAdmin!: boolean;
+  isAdmin?: boolean;
 
   @ApiProperty({
     required: false,

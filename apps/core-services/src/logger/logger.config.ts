@@ -19,6 +19,9 @@ export const LoggerConfiguration = (configService: ConfigService): Params => {
     pinoHttp: {
       level: logLevel,
       mixin: () => ({ ...ADDITIONAL_LOG_PROPERTIES, serviceName }),
+      transport: process.env.NODE_ENV !== 'production'
+            ? { target: 'pino-pretty' }
+            : undefined,
     },
   };
 };

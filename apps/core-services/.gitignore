@@ -4,5 +4,5 @@
 /dist
 .DS_Store
 .certs
-yarn.lock
+# yarn.lock
 .yarn

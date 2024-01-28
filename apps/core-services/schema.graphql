@@ -364,6 +364,11 @@ input CommentWhereUniqueInput {
   id: String!
 }
 
+input Credentials {
+  password: String!
+  username: String!
+}
+
 """
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
@@ -686,6 +691,7 @@ type Mutation {
   deleteTeam(where: TeamWhereUniqueInput!): Team!
   deleteUser(where: UserWhereUniqueInput!): User!
   deleteWorkspace(where: WorkspaceWhereUniqueInput!): Workspace!
+  login(credentials: Credentials!): UserInfo!
   updateActionEvent(data: ActionEventUpdateInput!, where: ActionEventWhereUniqueInput!): ActionEvent!
   updateArchived(data: ArchivedUpdateInput!, where: ArchivedWhereUniqueInput!): Archived!
   updateCollection(data: CollectionUpdateInput!, where: CollectionWhereUniqueInput!): Collection!

@@ -18,10 +18,12 @@ export class AclValidateRequestInterceptor implements NestInterceptor {
   ) {}
 
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    console.log("🚀 ~ AclValidateRequestInterceptor ~ intercept ~ context:", context)
     const [permissionsRoles]: any = this.reflector.getAllAndMerge<string[]>(
       "roles",
       [context.getHandler(), context.getClass()]
     );
+    console.log("🚀 ~ AclValidateRequestInterceptor ~ intercept ~ permissionsRoles:", permissionsRoles)
 
     const type = context.getType();
 
